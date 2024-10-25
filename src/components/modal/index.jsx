@@ -12,13 +12,15 @@ const PokeModal = () => {
   const [weakness, setWeakness] = useState([]);
 
   const getWeakness = () => {
-    data.types.forEach((element) => {
-      setWeakness((prev) => [...prev, types[element.type.name].weakness]);
-    });
+    if (data) {
+      data?.types?.forEach((element) => {
+        setWeakness((prev) => [...prev, types[element.type.name].weakness]);
+      });
 
-    weakness.filter((x) => {
-      console.log(x);
-    });
+      weakness.filter((x) => {
+        console.log(x);
+      });
+    }
   };
 
   useEffect(() => {

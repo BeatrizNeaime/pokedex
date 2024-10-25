@@ -30,6 +30,11 @@ const api = {
     const a = await fetch(`${url}pokemon/${id}`, options.get)
     const b = await a.json()
     return b;
+  },
+  getPokemonsByHabitat: async (habitat) => {
+    const a = await fetch(`${url}pokemon-habitat/${habitat.toLowerCase()}`, options.get)
+    const b = await a.json()
+    return b;
   }
 }
 

@@ -8,7 +8,7 @@ const PageContainer = styled.div`
   min-height: 100vh;
   position: relative;
   padding: 0 1rem;
-  margin-top: 15%;
+  margin-top: 10%;
 `;
 
 export { PageContainer };

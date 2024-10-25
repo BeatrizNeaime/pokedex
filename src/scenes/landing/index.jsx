@@ -25,7 +25,7 @@ const LandingPage = () => {
     const pokemon = await api.getRandomPokemon();
     if (pokemon) {
       setPokemon(pokemon);
-      const pokeType = pokemon?.types.find((x) => {
+      const pokeType = pokemon?.types?.find((x) => {
         return x.slot === 1;
       });
 
