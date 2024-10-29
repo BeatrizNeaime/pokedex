@@ -1,7 +1,7 @@
-import { Row } from "../../../common";
+import { Row } from "../common";
 import DataBar from "./dataBar";
 
-const GraphData = ({ icon, value, maxValue }) => {
+const GraphData = ({ icon, value }) => {
   return (
     <Row
       gap={"8px"}
@@ -14,7 +14,7 @@ const GraphData = ({ icon, value, maxValue }) => {
       <i className={`fa-solid fa-${icon}`}></i>
       <p>{value}</p>
 
-      <DataBar currentValue={value} maxValue={maxValue} />
+      <DataBar value={value} />
     </Row>
   );
 };

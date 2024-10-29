@@ -8,6 +8,7 @@ import api from './services/api';
 import Controls from './components/controls';
 import Filters from './scenes/filters';
 import Pokemons from './scenes/pokemons';
+import LandingPage from './scenes/landing/index';
 
 function App() {
   const [data, setData] = useState({
@@ -31,6 +32,7 @@ function App() {
       <GlobalStyle />
       <PokeModal />
       <Logo src={logo} />
+      <LandingPage />
       <Filters setData={setData} />
       <Pokemons data={data.results} />
       <Controls data={data} setData={setData} />

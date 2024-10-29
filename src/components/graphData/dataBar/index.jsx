@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import colors from "../../../../../constants/colors";
+import colors from "../../../constants/colors";
 
 const BarContainer = styled.div`
   width: 100%;
@@ -10,6 +10,7 @@ const BarContainer = styled.div`
   overflow: hidden;
   position: relative;
   padding: 2px;
+  border: 1px solid #1a1a1a;
 `;
 
 const Bar = styled.div`
@@ -29,15 +30,15 @@ const Bar = styled.div`
   }
 `;
 
-const DataBar = ({ currentValue }) => {
+const DataBar = ({ value }) => {
   const [data, setData] = useState({
-    percentage: null,
-    color: null,
+    percentage: 0,
+    color: "#bbb",
   });
 
   const calculatePercentage = () => {
-    const result = (currentValue / 200) * 100;
-    if (result > 50) {
+    const result = (value / 200) * 100;
+    if (result > 60) {
       setData((prev) => ({
         ...prev,
         color: "#00ff00",

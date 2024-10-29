@@ -4,13 +4,12 @@ import colors from "../../../constants/colors";
 const LandingContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  height: calc(100vh - 1.6rem);
-  margin-top: 1.05rem;
   background: ${(props) => props.background ?? colors.black};
   width: 100vw;
   gap: 1.5rem;
+  min-height: 80vh;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
@@ -24,6 +23,12 @@ const LeftSide = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  gap: 16px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 const RightSide = styled(LeftSide)`
@@ -32,14 +37,6 @@ const RightSide = styled(LeftSide)`
 `;
 
 const PokeImage = styled.img`
-  overflow-clip-margin: content-box;
-  overflow: clip;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  vertical-align: middle;
-  image-rendering: crisp-edges;
   filter: drop-shadow(5px 50px 15px rgba(0, 0, 0, 0.3));
 `;
 

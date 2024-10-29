@@ -14,18 +14,12 @@ const Filters = ({ setData }) => {
 
   const handleClick = async () => {
     const res = await api.getFilteredPokemons(filters, 0);
-    setData(res);
+    console.log(res);
   };
 
   return (
     <Column width={"100%"} gap={"32px"}>
-      <Row
-        width={"95%"}
-        gap={"8px"}
-        style={{
-          marginTop: "15%",
-        }}
-      >
+      <Row width={"95%"} gap={"8px"}>
         <HabitatsDropdown name={"Habitats"} data={habitats} />
         <TypesDropdown name={"Types"} data={types} />
         <Search setData={setData} />

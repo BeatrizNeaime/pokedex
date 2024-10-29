@@ -4,11 +4,15 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
   position: relative;
   padding: 0 1rem;
   margin-top: 10%;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 20%;
+  }
 `;
 
 export { PageContainer };

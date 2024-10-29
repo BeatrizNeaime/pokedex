@@ -20,6 +20,10 @@ const Row = styled.div`
   justify-content: ${(props) => props.justify ?? "space-evenly"};
   gap: ${(props) => props.gap ?? "0"};
   width: ${(props) => props.width ?? ""};
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Column = styled(Row)`
@@ -39,6 +43,7 @@ const Button = styled.button`
   justify-content: center;
   height: 45px;
   position: relative;
+  gap: 8px;
 
   &:hover {
     background: ${colors.blue[600]};
@@ -101,6 +106,12 @@ const PokeCode = styled.p`
   margin-bottom: 8px;
 `;
 
+const AudioPlayer = styled(Button)`
+  border-radius: 50%;
+  padding: 8px;
+  width: 45px;
+`;
+
 export {
   Row,
   Button,
@@ -111,4 +122,5 @@ export {
   TypeMarker,
   StatsTitle,
   PokeCode,
+  AudioPlayer,
 };

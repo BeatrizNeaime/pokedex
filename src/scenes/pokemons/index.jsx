@@ -8,7 +8,7 @@ const Pokemons = ({ data }) => {
       <Row
         style={{
           flexWrap: "wrap",
-          gap: "119px 16px",
+          gap: "12px 16px",
         }}
       >
         {data.map((pokemon) => (

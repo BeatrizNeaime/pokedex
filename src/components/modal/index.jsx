@@ -10,7 +10,7 @@ import {
   PokeCode,
 } from "../common";
 import Stats from "./../../scenes/pokemons/components/card/components/Stats";
-import GraphData from "./components/graphData";
+import GraphData from "../graphData";
 import { useContext, useEffect, useState } from "react";
 import { modalContext } from "../../contexts/modalContext";
 import icons from "../../constants/icons";

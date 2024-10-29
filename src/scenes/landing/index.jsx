@@ -1,9 +1,6 @@
-import Layout from "../../components/layout";
-import logo from "../../assets/svg/logo.svg";
 import {
   LandingContainer,
   LeftSide,
-  Logo,
   PokeImage,
   PokeName,
   RightSide,
@@ -11,14 +8,25 @@ import {
 import api from "./../../services/api";
 import { useEffect, useState } from "react";
 import colors, { createGradient } from "./../../constants/colors";
-import { Button, Row, TypeIcon } from "../../components/common";
+import {
+  Row,
+  TypeMarker,
+  Column,
+  AudioPlayer,
+  Button,
+} from "../../components/common";
+import icons from "../../constants/icons";
+import { PageContainer } from "../pokemons/components";
+import GraphData from "./../../components/graphData/index";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const LandingPage = () => {
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const [pokemon, setPokemon] = useState({});
   const [data, setData] = useState({
-    images: [],
     color: null,
     pokeImage: null,
+    audio: null,
   });
 
   const getRandomPokemon = async () => {
@@ -34,9 +42,15 @@ const LandingPage = () => {
           ...prev,
           pokeImage: pokemon?.sprites?.other["official-artwork"]?.front_default,
           color: colors.types[pokeType.type.name],
+          audio: pokemon?.cries?.latest,
         }));
       }
     }
+  };
+
+  const playAudio = () => {
+    const audio = new Audio(data.audio);
+    audio.play();
   };
 
   useEffect(() => {
@@ -44,36 +58,68 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <Layout>
-      <Logo src={logo} />
-      <LandingContainer background={() => createGradient(data.color)}>
+    <PageContainer>
+      <LandingContainer
+        background={() => createGradient(data.color)}
+        style={{
+          flexDirection: desktop ? "row" : "column-reverse",
+        }}
+      >
         <LeftSide>
           <PokeName>
             {pokemon?.name &&
               pokemon?.name.charAt(0).toUpperCase() + pokemon?.name.slice(1)}
           </PokeName>
-          <Row
-            gap="8px"
-            style={{
-              marginTop: "16px",
-            }}
-          >
+          <Row gap="8px">
             {pokemon?.types?.map((type) => (
-              <TypeIcon
+              <TypeMarker
                 key={type.slot}
-                src={require(`../../assets/img/types/bug.png`).def}
-                alt={type.type.name}
-                width={"30px"}
-              />
+                bg={colors.types[type.type.name]}
+                rounded
+              >
+                <img src={icons[type.type.name]} alt={type.type.name} />
+              </TypeMarker>
             ))}
           </Row>
-          <Button>Saber Mais</Button>
+          {pokemon?.stats && (
+            <Column width={desktop ? "50%" : "100%"} align={"flex-start"}>
+              <GraphData
+                icon="heart-pulse"
+                value={pokemon?.stats[0]?.base_stat}
+              />
+              <GraphData
+                icon={"hand-fist"}
+                value={pokemon?.stats[1].base_stat}
+              />
+              <GraphData
+                icon={"shield-halved"}
+                value={pokemon?.stats[2].base_stat}
+              />
+              <GraphData icon={"khanda"} value={pokemon?.stats[3].base_stat} />
+              <GraphData
+                icon={"shield-heart"}
+                value={pokemon?.stats[4].base_stat}
+              />
+              <GraphData
+                icon={"gauge-high"}
+                value={pokemon?.stats[5].base_stat}
+              />
+            </Column>
+          )}
+          <Row width={"50%"} gap={"8px"} justify={"flex-start"}>
+            <AudioPlayer onClick={playAudio}>
+              <i className="fa-solid fa-play"></i>
+            </AudioPlayer>
+            Play Cry
+          </Row>
+
+          <Button onClick={getRandomPokemon}>Get Another Pokemon</Button>
         </LeftSide>
         <RightSide>
           <PokeImage src={data.pokeImage} loading="lazy" draggable="false" />
         </RightSide>
       </LandingContainer>
-    </Layout>
+    </PageContainer>
   );
 };
 
