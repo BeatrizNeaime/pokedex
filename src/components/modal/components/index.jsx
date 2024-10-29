@@ -12,6 +12,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999999999999;
 `;
 
 const ModalContainer = styled.div`
@@ -25,6 +26,7 @@ const ModalContainer = styled.div`
   border-radius: 6px;
   box-shadow: 0 8px 32px 0 rgba(8, 8, 8, 0.37);
   position: relative;
+  padding: 0px 8px;
 `;
 
 const PhysioData = styled.div`

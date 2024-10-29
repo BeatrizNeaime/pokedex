@@ -10,6 +10,7 @@ import {
 } from "../../../../components/common";
 import Stats from "./components/Stats";
 import { modalContext } from "../../../../contexts/modalContext";
+import icons from "../../../../constants/icons";
 
 const PokeCard = ({ data }) => {
   const { setModal, setData } = useContext(modalContext);
@@ -21,8 +22,8 @@ const PokeCard = ({ data }) => {
     image: [],
   });
 
-  const getPokemonById = async () => {
-    const response = await api.getPokemonById(data.url.split("/")[6]);
+  const getPokemon = async () => {
+    const response = await api.getPokemon(data.url);
     if (response) {
       setPokeData(response);
       const pokeType = response?.types.find((x) => {
@@ -44,7 +45,7 @@ const PokeCard = ({ data }) => {
   };
 
   useEffect(() => {
-    getPokemonById();
+    getPokemon();
   }, []);
 
   return (
@@ -68,7 +69,7 @@ const PokeCard = ({ data }) => {
       >
         {pokeData?.types?.map((type) => (
           <TypeMarker key={type.slot} bg={colors.types[type.type.name]}>
-            {type.type.name}
+            <img src={icons[type.type.name]} /> {type.type.name}
           </TypeMarker>
         ))}
       </Row>

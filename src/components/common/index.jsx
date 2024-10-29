@@ -16,7 +16,7 @@ const Logo = styled.img`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: ${(props) => props.align ?? "center"};
   justify-content: ${(props) => props.justify ?? "space-evenly"};
   gap: ${(props) => props.gap ?? "0"};
   width: ${(props) => props.width ?? ""};
@@ -24,18 +24,33 @@ const Row = styled.div`
 
 const Column = styled(Row)`
   flex-direction: column;
+  width: ${(props) => props.width ?? "auto"};
 `;
 
 const Button = styled.button`
-  background: ${colors.blue[900]};
+  background: ${colors.blue[600]};
   border-radius: 6px;
   border: none;
   color: white;
   padding: 8px 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 45px;
+  position: relative;
 
   &:hover {
     background: ${colors.blue[600]};
+  }
+
+  &:active {
+    background: ${colors.blue[700]};
+  }
+
+  &:disabled {
+    background: ${colors.gray[400]};
+    cursor: not-allowed;
   }
 `;
 
@@ -50,14 +65,14 @@ const Name = styled.h2`
   font-size: 30px;
   text-transform: capitalize;
   text-align: center;
-  margin-top: 30%;
+  margin-top: ${(props) => props.marginTop ?? "30%"};
 `;
 
 const TypeMarker = styled.div`
   background: ${(props) => props.bg};
   color: white;
-  border-radius: 6px;
-  padding: 4px 8px;
+  border-radius: ${(props) => (props.rounded ? "50%" : "6px")};
+  padding: 8px;
   margin: 4px;
   display: flex;
   align-items: center;
@@ -65,6 +80,35 @@ const TypeMarker = styled.div`
   gap: 8px;
   text-transform: uppercase;
   font-weight: 600;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
-export { Row, Button, Column, PokeProfile, Name, Logo, TypeMarker };
+const StatsTitle = styled.h2`
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+`;
+
+const PokeCode = styled.p`
+  color: ${colors.gray[400]};
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+`;
+
+export {
+  Row,
+  Button,
+  Column,
+  PokeProfile,
+  Name,
+  Logo,
+  TypeMarker,
+  StatsTitle,
+  PokeCode,
+};

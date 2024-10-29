@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
 import colors from "../../../../../constants/colors";
+import { useEffect, useState } from "react";
 
 const BarContainer = styled.div`
   width: 100%;
@@ -29,14 +29,14 @@ const Bar = styled.div`
   }
 `;
 
-const DataBar = ({ currentValue }) => {
+const Graph = ({ value }) => {
   const [data, setData] = useState({
     percentage: null,
     color: null,
   });
 
   const calculatePercentage = () => {
-    const result = (currentValue / 200) * 100;
+    const result = (value / 200) * 100;
     if (result > 50) {
       setData((prev) => ({
         ...prev,
@@ -71,4 +71,4 @@ const DataBar = ({ currentValue }) => {
   );
 };
 
-export default DataBar;
+export default Graph;
