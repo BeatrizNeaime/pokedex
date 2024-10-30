@@ -18,7 +18,6 @@ const Search = () => {
   const clearSearch = () => {
     setFilters({ ...filters, name: null });
     nameRef.current.value = "";
-    getData();
   };
 
   useEffect(() => {

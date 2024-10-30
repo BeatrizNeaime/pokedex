@@ -21,6 +21,12 @@ const Pokemons = () => {
         {pokemons.results.map((pokemon, index) => (
           <PokeCard key={index} data={pokemon} />
         ))}
+
+        {pokemons.results.length === 0 && (
+          <h1 style={{ textAlign: "center", width: "100%" }}>
+            No results found
+          </h1>
+        )}
       </Row>
     </PageContainer>
   );
