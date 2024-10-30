@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Row } from "../../../../components/common";
 import { Input, InputContainer } from "./components";
 import { filterContext } from "./../../../../contexts/filterContext";
@@ -12,14 +12,22 @@ const Search = () => {
   const nameRef = useRef(null);
 
   const handleBlur = () => {
-    setFilters({ ...filters, name: nameRef.current.value });
+    setFilters({ ...filters, name: nameRef?.current?.value });
   };
 
   const clearSearch = () => {
-    setFilters({ ...filters, name: "" });
-    nameRef.current.value = "";
-    getData();
+    if (!filters.name || !filters.habitat) {
+      getData();
+    }
+    setFilters({ ...filters, name: null });
+    nameRef.current.value = null;
   };
+
+  useEffect(() => {
+    if (!filters.name) {
+      nameRef.current.value = null;
+    }
+  }, [filters.name]);
 
   return (
     <Row width={desktop ? "50%" : "100%"} gap={"8px"}>

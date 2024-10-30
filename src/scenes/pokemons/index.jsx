@@ -1,6 +1,6 @@
 import { PageContainer } from "./components";
 import PokeCard from "./components/card";
-import { Row } from "../../components/common";
+import { Name, Row } from "../../components/common";
 import { useContext } from "react";
 import { pokeContext } from "../../contexts/pokeContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -18,9 +18,15 @@ const Pokemons = () => {
           marginTop: desktop ? "" : "32px",
         }}
       >
-        {pokemons.results.map((pokemon, index) => (
-          <PokeCard key={index} data={pokemon} />
-        ))}
+        {pokemons.results.length === 0 ? (
+          <Name>
+            No results found... <i className="fa-solid fa-ghost" />
+          </Name>
+        ) : (
+          pokemons.results.map((pokemon, index) => (
+            <PokeCard key={index} data={pokemon} />
+          ))
+        )}
       </Row>
     </PageContainer>
   );

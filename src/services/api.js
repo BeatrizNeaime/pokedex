@@ -56,6 +56,7 @@ const api = {
     return pokemonsByType.filter(pokemon => dataNames.has(pokemon.pokemon.name));
   },
   getFilteredPokemons: async (filters, offset = 0, data = []) => {
+    debugger;
     const res = {
       count: 0,
       next: 0,
@@ -70,28 +71,39 @@ const api = {
         const targetData = res.results.length === 0 ? data : res.results;
         res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name));
       }
-      else if (filters.habitat) {
+
+      if (filters.habitat) {
+        const aux = []
         const a = await api.filterPokemonByHabitat(filters.habitat);
         if (res.all.length == 0) {
           console.clear()
-          a.map((pokemon) => res.all.push({ name: pokemon.name, url: pokemon.url }));
+          a.map((pokemon) => aux.push({ name: pokemon.name, url: pokemon.url.replace("-species", "") }));
         } else {
           const dataNames = new Set(res.all.map(pokemon => pokemon.name));
-          res.all = a.filter(pokemon => {
+          const aux = []
+          a.filter(pokemon => {
             if (dataNames.has(pokemon.name)) {
-              return pokemon
+              aux.push({ name: pokemon.name, url: pokemon.url })
             }
           });
         }
-
-      } else if (filters.type) {
+        res.all = aux;
+      }
+      //ok
+      if (filters.type) {
         console.log("tipo")
         const a = await api.filterPokemonByType(filters.type, data);
-        if (res.all.length === 0) {
+        if (res.all.length === 0 && (!filters.habitat && !filters.name)) {
           a.map((pokemon) => res.all.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url }));
         } else {
-          console.info("tipo")
-          console.log(res.all)
+          const dataNames = new Set(res.all.map(pokemon => pokemon.name));
+          const aux = []
+          a.filter(pokemon => {
+            if (dataNames.has(pokemon.pokemon.name)) {
+              aux.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url })
+            }
+          });
+          res.all = aux;
         }
       }
 

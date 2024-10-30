@@ -6,17 +6,18 @@ const Controls = () => {
   const { pokemons, setPokemons } = useContext(pokeContext);
 
   const getNextPokemons = () => {
+    window.scrollTo(0, 500);
     const { next, all } = pokemons;
     setPokemons((prev) => ({
       ...prev,
-      next: next + 10,
+      next: next + 10 > all.length ? null : next + 10,
       previous: next,
       results: all.slice(next, next + 10),
     }));
-    window.scrollTo(0, "120vh");
   };
 
   const getPreviousPokemons = () => {
+    window.scrollTo(0, 500);
     const { previous, all } = pokemons;
     setPokemons((prev) => ({
       ...prev,
@@ -24,7 +25,6 @@ const Controls = () => {
       previous: previous - 10,
       results: all.slice(previous - 10, previous),
     }));
-    window.scrollTo(0, "120vh");
   };
 
   if (!pokemons) {

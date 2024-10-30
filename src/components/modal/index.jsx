@@ -22,6 +22,7 @@ const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { modal, data, setModal } = useContext(modalContext);
   const [color, setColor] = useState();
+  const [weaknesses, setWeaknesses] = useState([]);
 
   const formatOrder = (order) => {
     if (order < 10) {
@@ -37,6 +38,8 @@ const PokeModal = () => {
     const pokeType = data?.types[0];
     setColor(colors.types[pokeType?.type?.name]);
   };
+
+  const getWeaknesses = () => {};
 
   useEffect(() => {
     getColor();
@@ -148,7 +151,7 @@ const PokeModal = () => {
                 >
                   {data?.abilities.map((item) => {
                     return (
-                      <Row gap={"4px"}>
+                      <Row gap={"4px"} width={"max-content"}>
                         <i
                           class="fa-regular fa-circle"
                           style={{
