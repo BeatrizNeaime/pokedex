@@ -7,7 +7,6 @@ const PageContainer = styled.div`
   justify-content: flex-start;
   min-height: 100vh;
   position: relative;
-  padding: 0 1rem;
   margin-top: 10%;
 
   @media screen and (max-width: 768px) {
