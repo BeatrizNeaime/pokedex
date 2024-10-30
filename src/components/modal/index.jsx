@@ -44,7 +44,6 @@ const PokeModal = () => {
     data?.types.map((item) => {
       const type = types[item.type.name];
       setWeaknesses([...type.weakness]);
-      console.log(weaknesses);
     });
   };
 
