@@ -43,11 +43,6 @@ const LandingPage = () => {
     }
   };
 
-  const playAudio = () => {
-    const audio = new Audio(data.audio);
-    audio.play();
-  };
-
   useEffect(() => {
     getRandomPokemon();
   }, []);
@@ -111,20 +106,22 @@ const LandingPage = () => {
             </Column>
           )}
 
-          <Row
-            justify={"flex-start"}
-            style={{
-              paddingLeft: desktop ? "" : "16px",
-            }}
-          >
-            <AudioPlayer
-              audio={pokemon?.cries?.latest}
+          {pokemon?.cries?.latest && (
+            <Row
+              justify={"flex-start"}
               style={{
-                alignSelf: "fle-start",
-                justifySelf: "flex-start",
+                paddingLeft: desktop ? "" : "16px",
               }}
-            />
-          </Row>
+            >
+              <AudioPlayer
+                audio={pokemon?.cries?.latest}
+                style={{
+                  alignSelf: "fle-start",
+                  justifySelf: "flex-start",
+                }}
+              />
+            </Row>
+          )}
 
           <Button onClick={getRandomPokemon}>Get Another Pokemon</Button>
         </LeftSide>

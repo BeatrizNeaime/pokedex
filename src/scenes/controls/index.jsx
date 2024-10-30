@@ -13,6 +13,7 @@ const Controls = ({ target }) => {
       previous: next,
       results: all.slice(next, next + 10),
     }));
+    window.scrollTo(0, "120vh");
   };
 
   const getPreviousPokemons = () => {
@@ -23,6 +24,7 @@ const Controls = ({ target }) => {
       previous: previous - 10,
       results: all.slice(previous - 10, previous),
     }));
+    window.scrollTo(0, "120vh");
   };
 
   if (!pokemons) {

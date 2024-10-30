@@ -2,16 +2,12 @@ import styled from "styled-components";
 import colors from "./../../../../constants/colors";
 
 const DropdownContainer = styled.div`
-  width: 25%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   position: relative;
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
 `;
 
 const DropdownBtn = styled.button`

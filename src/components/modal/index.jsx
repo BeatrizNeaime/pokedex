@@ -166,12 +166,7 @@ const PokeModal = () => {
                 <StatsTitle>
                   <i class="fa-solid fa-volume-high"></i> Sound
                 </StatsTitle>
-                <AudioPlayer
-                  audio={data?.cries?.latest}
-                  style={{
-                    width: "100%",
-                  }}
-                />
+                <AudioPlayer audio={data?.cries?.latest} width={"100%"} />
               </Column>
             </Column>
           </Row>
