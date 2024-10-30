@@ -59,7 +59,7 @@ const PokeModal = () => {
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
-            top: desktop ? "-20%" : "-50%",
+            top: desktop ? "" : "-50%",
           }}
         />
         <Name marginTop={desktop ? "20%" : "25%"}>

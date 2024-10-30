@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Button, Row } from "../../components/common";
 import { pokeContext } from "../../contexts/pokeContext";
 
-const Controls = ({ target }) => {
+const Controls = () => {
   const { pokemons, setPokemons } = useContext(pokeContext);
 
   const getNextPokemons = () => {
