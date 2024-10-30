@@ -66,7 +66,7 @@ const Filters = () => {
           marginTop: desktop ? "0" : "32px",
         }}
       >
-        <Row gap={"8px"}>
+        <Row gap={"8px"} width={desktop ? "50%" : "100%"}>
           <HabitatsDropdown name={"Habitats"} data={habitats} />
           <TypesDropdown name={"Types"} data={types} />
         </Row>
@@ -99,7 +99,7 @@ const Filters = () => {
             justify={"space-between"}
             gap={desktop ? 0 : "8px"}
           >
-            <Row gap={desktop ? "8px" : "4px"}>
+            <Row gap={desktop ? "8px" : "4px"} width={"max-content"}>
               {filters.type && (
                 <SelectedFilter name={filters.type} type={"type"} />
               )}

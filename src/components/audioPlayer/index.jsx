@@ -8,15 +8,15 @@ const Player = styled(Button)`
   width: 45px;
 `;
 
-const AudioPlayer = ({ audio }) => {
+const AudioPlayer = ({ audio, width }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const playAudio = () => {
-    const audio = new Audio(audio);
-    audio.play();
+    const sound = new Audio(audio);
+    sound.play();
   };
 
   return (
-    <Row width={desktop ? "50%" : "100%"} gap={"8px"} justify={"flex-start"}>
+    <Row width={width} gap={"8px"} justify={"flex-start"}>
       <Player onClick={playAudio}>
         <i className="fa-solid fa-play"></i>
       </Player>
