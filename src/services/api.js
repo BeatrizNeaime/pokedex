@@ -73,14 +73,11 @@ const api = {
       }
 
       if (filters.habitat) {
+        const aux = []
         const a = await api.filterPokemonByHabitat(filters.habitat);
         if (res.all.length == 0) {
           console.clear()
-          a.map((pokemon) => {
-            if (!res.all.find(p => p.name === pokemon.name)) {
-              res.all.splice(0, pokemon)
-            }
-          });
+          a.map((pokemon) => aux.push({ name: pokemon.name, url: pokemon.url.replace("-species", "") }));
         } else {
           const dataNames = new Set(res.all.map(pokemon => pokemon.name));
           const aux = []
@@ -89,13 +86,14 @@ const api = {
               aux.push({ name: pokemon.name, url: pokemon.url })
             }
           });
-          res.all = aux;
         }
+        res.all = aux;
       }
+      //ok
       if (filters.type) {
         console.log("tipo")
         const a = await api.filterPokemonByType(filters.type, data);
-        if (res.all.length === 0) {
+        if (res.all.length === 0 && (!filters.habitat && !filters.name)) {
           a.map((pokemon) => res.all.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url }));
         } else {
           const dataNames = new Set(res.all.map(pokemon => pokemon.name));

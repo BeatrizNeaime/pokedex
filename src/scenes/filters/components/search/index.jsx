@@ -12,12 +12,15 @@ const Search = () => {
   const nameRef = useRef(null);
 
   const handleBlur = () => {
-    setFilters({ ...filters, name: nameRef.current.value });
+    setFilters({ ...filters, name: nameRef?.current?.value });
   };
 
   const clearSearch = () => {
+    if (!filters.name || !filters.habitat) {
+      getData();
+    }
     setFilters({ ...filters, name: null });
-    nameRef.current.value = "";
+    nameRef.current.value = null;
   };
 
   useEffect(() => {

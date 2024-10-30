@@ -37,6 +37,8 @@ const PokeCard = ({ data }) => {
           ...prev,
           color: colors.types[pokeType?.type?.name],
         }));
+      } else {
+        return;
       }
     } catch (error) {
       console.error(error);

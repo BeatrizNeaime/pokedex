@@ -27,17 +27,27 @@ const Filters = () => {
   const handleClick = async () => {
     setLoading(true);
     try {
-      const res = await api.getFilteredPokemons(filters, 0, pokemons.all);
+      const res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
       console.log(res);
       if (res.results.length > 0) {
-        setPokemons({
+        setPokemons((prev) => ({
+          ...prev,
           all: res.all,
           results: res.results.slice(0, 10),
           offset: 10,
           count: res.results.length,
           next: res.next,
           previous: res.previous,
-        });
+        }));
+      } else {
+        setPokemons((prev) => ({
+          all: [],
+          results: [],
+          offset: 0,
+          count: 0,
+          next: 0,
+          previous: 0,
+        }));
       }
     } catch (error) {
       console.log(error);
@@ -118,6 +128,21 @@ const Filters = () => {
           </Row>
         </Column>
       )}
+
+      <Row>
+        {pokemons.count > 0 && (
+          <StatsTitle
+            style={{
+              textAlign: "left",
+              alignSelf: "flex-start",
+              width: "90%",
+            }}
+          >
+            <i className="fa-solid fa-clipboard-list" /> {pokemons.count}{" "}
+            Pokemons found
+          </StatsTitle>
+        )}
+      </Row>
     </Column>
   );
 };

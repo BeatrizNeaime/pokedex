@@ -22,8 +22,8 @@ export const PokeContextProvider = ({ children }) => {
         previous: null,
         results: res.results.slice(0, 10),
         all: res.results,
+        fixed: res.results,
       }));
-      console.log(res);
     }
   };
 
