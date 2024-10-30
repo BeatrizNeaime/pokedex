@@ -14,7 +14,6 @@ const TypesDropdown = ({ name }) => {
   const [active, setActive] = useState(false);
 
   const handleCheck = (type) => {
-    console.log(type);
     setFilters((prev) => ({
       ...prev,
       type: type.name,

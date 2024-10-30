@@ -3,29 +3,35 @@ import logo from "./assets/svg/logo.svg"
 import { Logo } from './components/common';
 import Layout from './components/layout';
 import PokeModal from './components/modal';
-import { useEffect, useState } from 'react';
-import api from './services/api';
-import Controls from './components/controls';
+import { useContext, useEffect, useState } from 'react';
 import Filters from './scenes/filters';
-import Pokemons from './scenes/pokemons';
 import LandingPage from './scenes/landing/index';
+import { pokeContext } from './contexts/pokeContext';
+import Loading from './components/loading/index';
+import Pokemons from './scenes/pokemons/index';
+import Controls from './scenes/controls';
 
 function App() {
-  const [data, setData] = useState({
-    count: 0,
-    next: null,
-    previous: null,
-    results: [],
-  });
-
-  const getData = async () => {
-    const res = await api.getPaginatedPokemons();
-    setData(res);
-  }
+  const { pokemons } = useContext(pokeContext);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (!pokemons) {
+      setLoaded(false)
+    } else {
+      setLoaded(true)
+    }
+  }, [pokemons])
+
+
+  if (!loaded) {
+    return (
+      <Layout>
+        <GlobalStyle />
+        <Loading />
+      </Layout>
+    )
+  }
 
   return (
     <Layout>
@@ -33,11 +39,12 @@ function App() {
       <PokeModal />
       <Logo src={logo} />
       <LandingPage />
-      <Filters setData={setData} />
-      <Pokemons data={data.results} />
-      <Controls data={data} setData={setData} />
+      <Filters />
+      {loaded ? <Pokemons /> : <Loading />}
+      <Controls />
     </Layout>
   );
+
 }
 
 export default App;

@@ -17,7 +17,7 @@ import icons from "../../constants/icons";
 
 const PokeModal = () => {
   const { modal, data, setModal } = useContext(modalContext);
-  const [weakness, setWeakness] = useState([]);
+  const [color, setColor] = useState();
 
   const formatOrder = (order) => {
     if (order < 10) {
@@ -29,19 +29,14 @@ const PokeModal = () => {
     }
   };
 
-  const getWeakness = () => {
-    if (data) {
-      data?.types?.forEach((element) => {
-        console.log(element);
-      });
-
-      return weakness;
-    }
+  const getColor = () => {
+    const pokeType = data?.types[0];
+    setColor(colors.types[pokeType?.type?.name]);
   };
 
   useEffect(() => {
-    getWeakness();
-  }, []);
+    getColor();
+  }, [data]);
 
   if (!modal) return null;
 
@@ -52,7 +47,7 @@ const PokeModal = () => {
       }}
     >
       <ModalContainer
-        bg={() => () => createGradient(colors.types.dragon, colors.blue[900])}
+        bg={() => () => createGradient(color, colors.blue[900])}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -60,7 +55,7 @@ const PokeModal = () => {
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
         />
-        <Name marginTop={"20%"}>● {data.name} ●</Name>
+        <Name marginTop={"20%"}>● {data.name.replaceAll("-", " ")} ●</Name>
         <PokeCode>#{formatOrder(data?.order)}</PokeCode>
 
         <PhysioData>

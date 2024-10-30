@@ -11,10 +11,11 @@ import {
 import Stats from "./components/Stats";
 import { modalContext } from "../../../../contexts/modalContext";
 import icons from "../../../../constants/icons";
+import { loadingContext } from "../../../../contexts/loadingContext";
 
 const PokeCard = ({ data }) => {
   const { setModal, setData } = useContext(modalContext);
-
+  const { setLoading } = useContext(loadingContext);
   const [pokeData, setPokeData] = useState();
 
   const [aux, setAux] = useState({
@@ -23,19 +24,21 @@ const PokeCard = ({ data }) => {
   });
 
   const getPokemon = async () => {
+    setLoading(true);
     const response = await api.getPokemon(data.url);
     if (response) {
       setPokeData(response);
-      const pokeType = response?.types.find((x) => {
+      const pokeType = response?.types?.find((x) => {
         return x.slot === 1;
       });
 
       setAux((prev) => {
         return {
           ...prev,
-          color: colors.types[pokeType.type.name],
+          color: colors.types[pokeType?.type?.name],
         };
       });
+      setLoading(false);
     }
   };
 
@@ -59,7 +62,7 @@ const PokeCard = ({ data }) => {
           top: "-60%",
         }}
       />
-      <Name> ● {data.name} ● </Name>
+      <Name> ● {data?.name?.replaceAll("-", " ")} ● </Name>
 
       <Row
         width={"100%"}

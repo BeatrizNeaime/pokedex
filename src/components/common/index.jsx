@@ -71,6 +71,8 @@ const Name = styled.h2`
   text-transform: capitalize;
   text-align: center;
   margin-top: ${(props) => props.marginTop ?? "30%"};
+  word-wrap: break-word;
+  white-space: nowrap;
 `;
 
 const TypeMarker = styled.div`
@@ -87,8 +89,23 @@ const TypeMarker = styled.div`
   font-weight: 600;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: ${(props) => props.width ?? "20px"};
+    height: ${(props) => props.height ?? "20px"};
+  }
+`;
+
+const OutlinedBtn = styled.button`
+  background: transparent;
+  border: 1px solid ${(props) => props.border ?? "white"};
+  border-radius: 6px;
+  height: 45px;
+  color: ${(props) => props.color ?? "white"};
+  padding: 0 16px;
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => props.border ?? "white"};
+    color: ${(props) => props.color ?? "black"};
   }
 `;
 
@@ -123,4 +140,5 @@ export {
   StatsTitle,
   PokeCode,
   AudioPlayer,
+  OutlinedBtn,
 };

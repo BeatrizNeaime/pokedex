@@ -1,8 +1,6 @@
 import { PageContainer } from "../../scenes/pokemons/components";
 import pokeball from "../../assets/img/pokeball.png";
 import styled from "styled-components";
-import { useContext } from "react";
-import { loadingContext } from "../../contexts/loadingContext";
 
 const LoadingImage = styled.img`
   animation: rotate 5s infinite linear;
@@ -17,9 +15,6 @@ const LoadingImage = styled.img`
 `;
 
 const Loading = () => {
-  const { loading } = useContext(loadingContext);
-
-  if (!loading) return null;
 
   return (
     <PageContainer

@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import { Button } from "../../../../components/common";
+import { Button, TypeMarker } from "../../../../components/common";
 import { filterContext } from "../../../../contexts/filterContext";
+import icons from "../../../../constants/icons";
+import colors from "../../../../constants/colors";
 
 const SelectedFilter = ({ name, type }) => {
   const { setFilters } = useContext(filterContext);
@@ -13,11 +15,17 @@ const SelectedFilter = ({ name, type }) => {
   };
 
   return (
-    <Button
-      style={{
-        gap: "8px",
-      }}
-    >
+    <Button>
+      {icons[name.toLowerCase()] && (
+        <TypeMarker
+          bg={colors.types[name.toLowerCase()]}
+          rounded
+          width={"10px"}
+          height={"10px"}
+        >
+          <img src={icons[name.toLowerCase()]} alt={type} />
+        </TypeMarker>
+      )}
       {name}
       <span onClick={handleRemove}>
         <i className={`fas fa-times`} />
