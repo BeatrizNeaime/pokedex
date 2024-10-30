@@ -18,6 +18,7 @@ const TypesDropdown = ({ name }) => {
       ...prev,
       type: type.name,
     }));
+
     setActive(false);
   };
 
