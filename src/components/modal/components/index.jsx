@@ -28,7 +28,7 @@ const PhysioData = styled.div`
   gap: 16px;
   align-items: center;
   justify-content: space-evenly;
-  padding: 5px 0;
+  padding: 8px;
   margin: 10px 0;
 `;
 
