@@ -148,7 +148,7 @@ const PokeModal = () => {
                 >
                   {data?.abilities.map((item) => {
                     return (
-                      <Row gap={"4px"}>
+                      <Row gap={"4px"} width={"max-content"}>
                         <i
                           class="fa-regular fa-circle"
                           style={{
