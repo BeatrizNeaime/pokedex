@@ -59,7 +59,7 @@ const Button = styled.button`
 const PokeProfile = styled.img`
   position: absolute;
   transform: scale(0.5);
-  top: -50%;
+  top: -20%;
 
   @media (max-width: 768px) {
     transform: scale(0.4);

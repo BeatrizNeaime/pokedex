@@ -17,6 +17,7 @@ import { modalContext } from "../../contexts/modalContext";
 import icons from "../../constants/icons";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import AudioPlayer from "./../audioPlayer/index";
+import types from "./../../constants/types";
 
 const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
@@ -39,10 +40,17 @@ const PokeModal = () => {
     setColor(colors.types[pokeType?.type?.name]);
   };
 
-  const getWeaknesses = () => {};
+  const getWeaknesses = () => {
+    data?.types.map((item) => {
+      const type = types[item.type.name];
+      setWeaknesses([...type.weakness]);
+      console.log(weaknesses);
+    });
+  };
 
   useEffect(() => {
     getColor();
+    getWeaknesses();
   }, [data]);
 
   if (!modal) return null;
@@ -62,10 +70,10 @@ const PokeModal = () => {
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
-            top: desktop ? "" : "-50%",
+            top: desktop ? "-30%" : "-50%",
           }}
         />
-        <Name marginTop={desktop ? "20%" : "25%"}>
+        <Name marginTop={desktop ? "35%" : "25%"}>
           ● {data.name.replaceAll("-", " ")} ●
         </Name>
         <PokeCode>#{formatOrder(data?.order)}</PokeCode>
@@ -178,7 +186,26 @@ const PokeModal = () => {
             <StatsTitle>
               <i class="fa-solid fa-circle-radiation"></i> Weaknesses
             </StatsTitle>
-            <Row></Row>
+            <Row
+              width={"max-content"}
+              style={{
+                marginBottom: "16px",
+              }}
+            >
+              {weaknesses.map((item) => {
+                return (
+                  <TypeMarker
+                    bg={colors.types[item]}
+                    rounded={true}
+                    style={{
+                      marginRight: "8px",
+                    }}
+                  >
+                    <img src={icons[item]} />
+                  </TypeMarker>
+                );
+              })}
+            </Row>
           </Column>
         </Column>
       </ModalContainer>

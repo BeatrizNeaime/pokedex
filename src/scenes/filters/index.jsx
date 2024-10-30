@@ -35,12 +35,13 @@ const Filters = () => {
           all: res.all,
           results: res.results.slice(0, 10),
           offset: 10,
-          count: res.results.length,
+          count: res.count,
           next: res.next,
           previous: res.previous,
         }));
       } else {
         setPokemons((prev) => ({
+          ...prev,
           all: [],
           results: [],
           offset: 0,
@@ -115,6 +116,9 @@ const Filters = () => {
               )}
               {filters.habitat && (
                 <SelectedFilter name={filters.habitat} type={"habitat"} />
+              )}
+              {filters.name && (
+                <SelectedFilter name={filters.name} type={"name"} />
               )}
             </Row>
             <OutlinedBtn

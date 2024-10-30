@@ -45,7 +45,7 @@ const TypesDropdown = ({ name }) => {
                 handleCheck(types[type]);
               }}
             >
-              <img src={icons[type]} />
+              <img src={icons[type]} alt={type} />
               {types[type].name}
             </DropdownItem>
           ))}
