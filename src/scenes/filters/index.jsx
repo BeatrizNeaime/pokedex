@@ -16,8 +16,10 @@ import SelectedFilter from "./components/selectedFilter";
 import api from "./../../services/api";
 import { pokeContext } from "../../contexts/pokeContext";
 import { loadingContext } from "./../../contexts/loadingContext";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 const Filters = () => {
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const { filters, setFilters } = useContext(filterContext);
   const { pokemons, setPokemons, getData } = useContext(pokeContext);
   const { setLoading } = useContext(loadingContext);
@@ -56,14 +58,23 @@ const Filters = () => {
 
   return (
     <Column width={"100%"} gap={"32px"}>
-      <Row width={"95%"} gap={"8px"}>
-        <HabitatsDropdown name={"Habitats"} data={habitats} />
-        <TypesDropdown name={"Types"} data={types} />
+      <Row
+        width={"95%"}
+        gap={"8px"}
+        style={{
+          flexDirection: desktop ? "row" : "column",
+          marginTop: desktop ? "0" : "32px",
+        }}
+      >
+        <Row gap={"8px"}>
+          <HabitatsDropdown name={"Habitats"} data={habitats} />
+          <TypesDropdown name={"Types"} data={types} />
+        </Row>
         <Search />
         <Button
           style={{
             height: "45px",
-            width: "10%",
+            width: desktop ? "10%" : "100%",
           }}
           onClick={handleClick}
         >
@@ -72,12 +83,23 @@ const Filters = () => {
       </Row>
 
       {(filters.type || filters.habitat) && (
-        <Column width={"90%"} gap={"8px"} align={"flex-start"}>
+        <Column
+          width={"90%"}
+          gap={"8px"}
+          align={"flex-start"}
+          style={{
+            marginBottom: desktop ? "" : "32px",
+          }}
+        >
           <StatsTitle>
             <i className="fas fa-filter"></i> Filters
           </StatsTitle>
-          <Row width={"100%"} justify={"space-between"}>
-            <Row gap={"8px"}>
+          <Row
+            width={"100%"}
+            justify={"space-between"}
+            gap={desktop ? 0 : "8px"}
+          >
+            <Row gap={desktop ? "8px" : "4px"}>
               {filters.type && (
                 <SelectedFilter name={filters.type} type={"type"} />
               )}
@@ -91,7 +113,7 @@ const Filters = () => {
               }}
               onClick={handleClearFilters}
             >
-              Clear Filters
+              {desktop ? " Clear Filters" : "Clear"}
             </OutlinedBtn>
           </Row>
         </Column>

@@ -7,6 +7,7 @@ const Logo = styled.img`
   top: 1rem;
   align-self: center;
   justify-self: center;
+  object-fit: contain;
 
   @media screen and (max-width: 768px) {
     height: 60px;
@@ -19,11 +20,7 @@ const Row = styled.div`
   align-items: ${(props) => props.align ?? "center"};
   justify-content: ${(props) => props.justify ?? "space-evenly"};
   gap: ${(props) => props.gap ?? "0"};
-  width: ${(props) => props.width ?? ""};
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-  }
+  width: ${(props) => props.width ?? "100%"};
 `;
 
 const Column = styled(Row)`
@@ -63,6 +60,16 @@ const PokeProfile = styled.img`
   position: absolute;
   transform: scale(0.5);
   top: -50%;
+
+  @media (max-width: 768px) {
+    transform: scale(0.4);
+    top: -100%;
+  }
+
+  @media (max-width: 415px) {
+    transform: scale(0.4);
+    top: -100%;
+  }
 `;
 
 const Name = styled.h2`
@@ -114,6 +121,10 @@ const StatsTitle = styled.h2`
   font-size: 20px;
   text-transform: uppercase;
   margin-bottom: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const PokeCode = styled.p`
@@ -123,10 +134,21 @@ const PokeCode = styled.p`
   margin-bottom: 8px;
 `;
 
-const AudioPlayer = styled(Button)`
-  border-radius: 50%;
-  padding: 8px;
-  width: 45px;
+const Overlay = styled.div`
+  background: rgb(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999999999999;
+  width: 100vw;
+  max-width: 100vw;
 `;
 
 export {
@@ -139,6 +161,6 @@ export {
   TypeMarker,
   StatsTitle,
   PokeCode,
-  AudioPlayer,
   OutlinedBtn,
+  Overlay,
 };

@@ -71,23 +71,28 @@ const api = {
         res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name));
       }
       else if (filters.habitat) {
-        debugger;
         const a = await api.filterPokemonByHabitat(filters.habitat);
         if (res.all.length == 0) {
-          res.all = a;
+          console.clear()
+          a.map((pokemon) => res.all.push({ name: pokemon.name, url: pokemon.url }));
         } else {
-          a.map((pokemon) => {
-            if (res.all.find(p => p.name === pokemon.name)) {
-              res.all.push(pokemon);
+          const dataNames = new Set(res.all.map(pokemon => pokemon.name));
+          res.all = a.filter(pokemon => {
+            if (dataNames.has(pokemon.name)) {
+              return pokemon
             }
-          })
+          });
         }
 
       } else if (filters.type) {
+        console.log("tipo")
         const a = await api.filterPokemonByType(filters.type, data);
-        a.map((pokemon) => {
-          res.all.push(pokemon.pokemon);
-        })
+        if (res.all.length === 0) {
+          a.map((pokemon) => res.all.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url }));
+        } else {
+          console.info("tipo")
+          console.log(res.all)
+        }
       }
 
       res.count = res.all.length;

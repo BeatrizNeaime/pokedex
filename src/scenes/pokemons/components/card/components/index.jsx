@@ -16,7 +16,8 @@ const Card = styled.div`
   cursor: pointer;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 90%;
+    height: auto;
   }
 `;
 

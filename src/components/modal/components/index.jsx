@@ -1,20 +1,5 @@
 import styled from "styled-components";
 
-const Overlay = styled.div`
-  background: rgb(255, 255, 255, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999999999999;
-`;
-
 const ModalContainer = styled.div`
   background: ${(props) => props.bg};
   display: flex;
@@ -27,6 +12,12 @@ const ModalContainer = styled.div`
   box-shadow: 0 8px 32px 0 rgba(8, 8, 8, 0.37);
   position: relative;
   padding: 0px 8px;
+  margin: 0;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    max-height: 90%;
+  }
 `;
 
 const PhysioData = styled.div`
@@ -41,4 +32,4 @@ const PhysioData = styled.div`
   margin: 10px 0;
 `;
 
-export { Overlay, ModalContainer, PhysioData };
+export { ModalContainer, PhysioData };

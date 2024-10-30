@@ -8,17 +8,12 @@ import {
 import api from "./../../services/api";
 import { useEffect, useState } from "react";
 import colors, { createGradient } from "./../../constants/colors";
-import {
-  Row,
-  TypeMarker,
-  Column,
-  AudioPlayer,
-  Button,
-} from "../../components/common";
+import { Row, TypeMarker, Column, Button } from "../../components/common";
 import icons from "../../constants/icons";
 import { PageContainer } from "../pokemons/components";
 import GraphData from "./../../components/graphData/index";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import AudioPlayer from "../../components/audioPlayer";
 
 const LandingPage = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
@@ -58,7 +53,11 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <PageContainer>
+    <PageContainer
+      style={{
+        marginTop: desktop ? "" : "25%",
+      }}
+    >
       <LandingContainer
         background={() => createGradient(data.color)}
         style={{
@@ -67,22 +66,27 @@ const LandingPage = () => {
       >
         <LeftSide>
           <PokeName>
-            {pokemon?.name &&
-              pokemon?.name.charAt(0).toUpperCase() + pokemon?.name.slice(1)}
+            {pokemon?.name && pokemon?.name?.replaceAll("-", " ")}
           </PokeName>
-          <Row gap="8px">
+          <Row gap="8px" width={"max-content"}>
             {pokemon?.types?.map((type) => (
               <TypeMarker
                 key={type.slot}
                 bg={colors.types[type.type.name]}
-                rounded
+                rounded={true}
               >
                 <img src={icons[type.type.name]} alt={type.type.name} />
               </TypeMarker>
             ))}
           </Row>
           {pokemon?.stats && (
-            <Column width={desktop ? "50%" : "100%"} align={"flex-start"}>
+            <Column
+              width={desktop ? "50%" : "100%"}
+              align={"flex-start"}
+              style={{
+                padding: desktop ? "" : "0 16px",
+              }}
+            >
               <GraphData
                 icon="heart-pulse"
                 value={pokemon?.stats[0]?.base_stat}
@@ -106,11 +110,20 @@ const LandingPage = () => {
               />
             </Column>
           )}
-          <Row width={"50%"} gap={"8px"} justify={"flex-start"}>
-            <AudioPlayer onClick={playAudio}>
-              <i className="fa-solid fa-play"></i>
-            </AudioPlayer>
-            Play Cry
+
+          <Row
+            justify={"flex-start"}
+            style={{
+              paddingLeft: desktop ? "" : "16px",
+            }}
+          >
+            <AudioPlayer
+              audio={pokemon?.cries?.latest}
+              style={{
+                alignSelf: "fle-start",
+                justifySelf: "flex-start",
+              }}
+            />
           </Row>
 
           <Button onClick={getRandomPokemon}>Get Another Pokemon</Button>

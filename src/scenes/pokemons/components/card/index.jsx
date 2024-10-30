@@ -12,10 +12,13 @@ import Stats from "./components/Stats";
 import { modalContext } from "../../../../contexts/modalContext";
 import icons from "../../../../constants/icons";
 import { loadingContext } from "../../../../contexts/loadingContext";
+import Loading from "../../../../components/loading";
+import { useMediaQuery } from "../../../../hooks/useMediaQuery";
 
 const PokeCard = ({ data }) => {
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const { setModal, setData } = useContext(modalContext);
-  const { setLoading } = useContext(loadingContext);
+  const { loading, setLoading } = useContext(loadingContext);
   const [pokeData, setPokeData] = useState();
 
   const [aux, setAux] = useState({
@@ -25,19 +28,19 @@ const PokeCard = ({ data }) => {
 
   const getPokemon = async () => {
     setLoading(true);
-    const response = await api.getPokemon(data.url);
-    if (response) {
-      setPokeData(response);
-      const pokeType = response?.types?.find((x) => {
-        return x.slot === 1;
-      });
-
-      setAux((prev) => {
-        return {
+    try {
+      const response = await api.getPokemon(data.url);
+      if (response) {
+        setPokeData(response);
+        const pokeType = response?.types?.find((x) => x.slot === 1);
+        setAux((prev) => ({
           ...prev,
           color: colors.types[pokeType?.type?.name],
-        };
-      });
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -49,17 +52,21 @@ const PokeCard = ({ data }) => {
 
   useEffect(() => {
     getPokemon();
-  }, []);
+  }, [data.url]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Card
-      bg={() => createGradient(aux.color, colors.blue[900])}
+      bg={createGradient(aux.color, colors.blue[900])}
       onClick={handleClick}
     >
       <PokeProfile
         src={pokeData?.sprites?.other?.["official-artwork"]?.front_default}
         style={{
-          top: "-60%",
+          top: desktop ? "-60%" : "",
         }}
       />
       <Name> ● {data?.name?.replaceAll("-", " ")} ● </Name>

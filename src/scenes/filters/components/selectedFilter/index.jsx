@@ -19,7 +19,7 @@ const SelectedFilter = ({ name, type }) => {
       {icons[name.toLowerCase()] && (
         <TypeMarker
           bg={colors.types[name.toLowerCase()]}
-          rounded
+          rounded={true}
           width={"10px"}
           height={"10px"}
         >

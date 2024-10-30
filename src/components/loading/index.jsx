@@ -1,6 +1,6 @@
-import { PageContainer } from "../../scenes/pokemons/components";
 import pokeball from "../../assets/img/pokeball.png";
 import styled from "styled-components";
+import { Card } from "../../scenes/pokemons/components/card/components";
 
 const LoadingImage = styled.img`
   animation: rotate 5s infinite linear;
@@ -15,15 +15,10 @@ const LoadingImage = styled.img`
 `;
 
 const Loading = () => {
-
   return (
-    <PageContainer
-      style={{
-        minHeight: "20vh",
-      }}
-    >
+    <Card>
       <LoadingImage src={pokeball} alt="loading" />
-    </PageContainer>
+    </Card>
   );
 };
 

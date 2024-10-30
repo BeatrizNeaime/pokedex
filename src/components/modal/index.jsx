@@ -1,4 +1,4 @@
-import { ModalContainer, Overlay, PhysioData } from "./components";
+import { ModalContainer, PhysioData } from "./components";
 import colors, { createGradient } from "./../../constants/colors";
 import {
   Column,
@@ -8,14 +8,18 @@ import {
   StatsTitle,
   TypeMarker,
   PokeCode,
+  Overlay,
 } from "../common";
 import Stats from "./../../scenes/pokemons/components/card/components/Stats";
 import GraphData from "../graphData";
 import { useContext, useEffect, useState } from "react";
 import { modalContext } from "../../contexts/modalContext";
 import icons from "../../constants/icons";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import AudioPlayer from "./../audioPlayer/index";
 
 const PokeModal = () => {
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const { modal, data, setModal } = useContext(modalContext);
   const [color, setColor] = useState();
 
@@ -47,15 +51,20 @@ const PokeModal = () => {
       }}
     >
       <ModalContainer
-        bg={() => () => createGradient(color, colors.blue[900])}
+        bg={createGradient(color, colors.blue[900])}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
+          style={{
+            top: desktop ? "-20%" : "-50%",
+          }}
         />
-        <Name marginTop={"20%"}>● {data.name.replaceAll("-", " ")} ●</Name>
+        <Name marginTop={desktop ? "20%" : "25%"}>
+          ● {data.name.replaceAll("-", " ")} ●
+        </Name>
         <PokeCode>#{formatOrder(data?.order)}</PokeCode>
 
         <PhysioData>
@@ -157,19 +166,12 @@ const PokeModal = () => {
                 <StatsTitle>
                   <i class="fa-solid fa-volume-high"></i> Sound
                 </StatsTitle>
-                <audio
-                  controls
+                <AudioPlayer
+                  audio={data?.cries?.latest}
                   style={{
                     width: "100%",
-                    height: "50px",
-                    borderRadius: "6px",
-                    background: colors.gray[900],
-                    border: "none",
                   }}
-                >
-                  <source src={data?.cries?.latest} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
+                />
               </Column>
             </Column>
           </Row>

@@ -3,8 +3,10 @@ import { Row } from "../../../../components/common";
 import { Input, InputContainer } from "./components";
 import { filterContext } from "./../../../../contexts/filterContext";
 import { pokeContext } from "../../../../contexts/pokeContext";
+import { useMediaQuery } from "../../../../hooks/useMediaQuery";
 
 const Search = () => {
+  const desktop = useMediaQuery("(min-width: 1024px)");
   const { filters, setFilters } = useContext(filterContext);
   const { getData } = useContext(pokeContext);
   const nameRef = useRef(null);
@@ -20,7 +22,7 @@ const Search = () => {
   };
 
   return (
-    <Row width={"50%"} gap={"8px"}>
+    <Row width={desktop ? "50%" : "100%"} gap={"8px"}>
       <InputContainer>
         <Input
           type="text"

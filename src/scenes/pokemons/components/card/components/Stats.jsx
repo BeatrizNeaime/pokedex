@@ -7,12 +7,20 @@ const StatsName = styled.div`
   align-items: center;
   gap: 8px;
   color: white;
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const StatsValue = styled.h2`
   font-size: 24px;
   color: white;
   font-weight: bold;
+
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 const Stats = ({ name, icon, value, unit }) => {

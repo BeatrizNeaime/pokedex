@@ -8,6 +8,10 @@ const DropdownContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   position: relative;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const DropdownBtn = styled.button`

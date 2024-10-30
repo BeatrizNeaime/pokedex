@@ -23,14 +23,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   img{
-     overflow-clip-margin: content-box;
-  overflow: clip;
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  vertical-align: middle;
-  image-rendering: crisp-edges;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    vertical-align: middle;
+    image-rendering: crisp-edges;
   }
 
 `;

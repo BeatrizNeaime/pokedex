@@ -23,16 +23,6 @@ function App() {
     }
   }, [pokemons])
 
-
-  if (!loaded) {
-    return (
-      <Layout>
-        <GlobalStyle />
-        <Loading />
-      </Layout>
-    )
-  }
-
   return (
     <Layout>
       <GlobalStyle />
