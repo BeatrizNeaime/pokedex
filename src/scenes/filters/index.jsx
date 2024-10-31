@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   Button,
   Column,
@@ -27,7 +27,12 @@ const Filters = () => {
   const handleClick = async () => {
     setLoading(true);
     try {
-      const res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
+      let res;
+      if (filters.name || filters.type || filters.habitat) {
+        res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
+      } else {
+        await getData();
+      }
       if (res.results.length > 0) {
         setPokemons((prev) => ({
           ...prev,
@@ -66,6 +71,10 @@ const Filters = () => {
     return;
   };
 
+  useEffect(() => {
+    handleClick();
+  }, [filters]);
+
   return (
     <Column width={"100%"} gap={"32px"}>
       <Row
@@ -92,7 +101,7 @@ const Filters = () => {
         </Button>
       </Row>
 
-      {(filters.type || filters.habitat) && (
+      {(filters.type || filters.habitat || filters.name) && (
         <Column
           width={"90%"}
           gap={"8px"}
