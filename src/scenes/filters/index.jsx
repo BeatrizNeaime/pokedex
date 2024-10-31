@@ -28,7 +28,6 @@ const Filters = () => {
     setLoading(true);
     try {
       const res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
-      console.log(res);
       if (res.results.length > 0) {
         setPokemons((prev) => ({
           ...prev,
@@ -51,7 +50,7 @@ const Filters = () => {
         }));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }

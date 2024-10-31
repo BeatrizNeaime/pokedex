@@ -16,8 +16,9 @@ const ModalContainer = styled.div`
 
   @media screen and (max-width: 768px) {
     width: 90%;
-    max-height: 90%;
+    max-height: 95%;
   }
+
 `;
 
 const PhysioData = styled.div`
