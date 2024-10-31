@@ -26,7 +26,7 @@ const PokeModal = () => {
   const [weaknesses, setWeaknesses] = useState([]);
   const [profileTop, setProfileTop] = useState();
 
-  const GetProfileTop = () => {
+  const getProfileTop = () => {
     const width = window.innerWidth;
 
     if ((320 <= width && width < 375) || (375 <= width && width < 425)) {
@@ -35,8 +35,10 @@ const PokeModal = () => {
       setProfileTop("-20%");
     } else if (768 <= width && width < 1024) {
       setProfileTop("-20%");
-    } else if (width >= 1024) {
+    } else if (width >= 1024 && width < 1440) {
       setProfileTop("-35%");
+    } else if (width >= 1440) {
+      setProfileTop("-30%");
     }
   };
 
@@ -65,7 +67,7 @@ const PokeModal = () => {
   useEffect(() => {
     getColor();
     getWeaknesses();
-    GetProfileTop();
+    getProfileTop();
   }, [data]);
 
   if (!modal) return null;
