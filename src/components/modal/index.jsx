@@ -35,10 +35,8 @@ const PokeModal = () => {
       setProfileTop("-20%");
     } else if (768 <= width && width < 1024) {
       setProfileTop("-20%");
-    } else if (width >= 1024 && width < 1440) {
-      setProfileTop("-35%");
-    } else if (width >= 1440) {
-      setProfileTop("-30%");
+    } else if (width >= 1024) {
+      setProfileTop("-60%");
     }
   };
 
@@ -102,7 +100,6 @@ const PokeModal = () => {
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
             top: profileTop,
-            transform: desktop ? "" : "scale(0.3)",
           }}
         />
         <Name marginTop={desktop ? "35%" : "25%"}>
