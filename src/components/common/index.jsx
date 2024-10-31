@@ -59,16 +59,25 @@ const Button = styled.button`
 const PokeProfile = styled.img`
   position: absolute;
   transform: scale(0.5);
-  top: -20%;
+  top: -50%;
 
   @media (max-width: 768px) {
     transform: scale(0.4);
-    top: -100%;
+    top: -50%;
+  }
+
+  @media (min-width: 425px) and (max-width: 767px) {
+    top: -80%;
   }
 
   @media (max-width: 415px) {
     transform: scale(0.4);
     top: -100%;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023x) {
+    transform: scale(0.6);
+    top: -50%;
   }
 `;
 

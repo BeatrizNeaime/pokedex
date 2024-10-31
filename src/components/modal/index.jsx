@@ -24,6 +24,21 @@ const PokeModal = () => {
   const { modal, data, setModal } = useContext(modalContext);
   const [color, setColor] = useState();
   const [weaknesses, setWeaknesses] = useState([]);
+  const [profileTop, setProfileTop] = useState();
+
+  const GetProfileTop = () => {
+    const width = window.innerWidth;
+
+    if ((320 <= width && width < 375) || (375 <= width && width < 425)) {
+      setProfileTop("-40%");
+    } else if (425 <= width && width < 768) {
+      setProfileTop("-20%");
+    } else if (768 <= width && width < 1024) {
+      setProfileTop("-20%");
+    } else if (width >= 1024) {
+      setProfileTop("-35%");
+    }
+  };
 
   const formatOrder = (order) => {
     if (order < 10) {
@@ -50,6 +65,7 @@ const PokeModal = () => {
   useEffect(() => {
     getColor();
     getWeaknesses();
+    GetProfileTop();
   }, [data]);
 
   if (!modal) return null;
@@ -66,10 +82,25 @@ const PokeModal = () => {
           e.stopPropagation();
         }}
       >
+        <i
+          class="fa-solid fa-circle-xmark"
+          style={{
+            position: "absolute",
+            top: "8px",
+            right: "8px",
+            color: colors.gray[400],
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setModal(false);
+          }}
+        ></i>
+
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
-            top: desktop ? "-30%" : "-50%",
+            top: profileTop,
+            transform: desktop ? "" : "scale(0.3)",
           }}
         />
         <Name marginTop={desktop ? "35%" : "25%"}>
