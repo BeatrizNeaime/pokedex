@@ -3,6 +3,8 @@
 O Pokédex é o resultado do meu teste técnico para a vaga de Desenvolvedor Full Stack na Sistema ESO; e permite aos usuários explorar informações sobre Pokémon, incluindo detalhes como tipos, habitats e estatísticas.
 A aplicação utiliza a [PokéAPI](https://pokeapi.co/) para obter dados atualizados sobre todos os Pokémon disponíveis.
 
+Você pode acessá-la [neste link](https://pokedex-seven-inky.vercel.app)
+
 ## Tenologias Utilizadas
 
 - **React**: Biblioteca JavaScript para construir interfaces de usuário.
