@@ -24,7 +24,7 @@ const api = {
       const b = await a.json()
       return b;
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return false
     }
   },
@@ -34,7 +34,7 @@ const api = {
       const b = await a.json()
       return b.pokemon;
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return false
     }
   },
@@ -56,7 +56,6 @@ const api = {
     return pokemonsByType.filter(pokemon => dataNames.has(pokemon.pokemon.name));
   },
   getFilteredPokemons: async (filters, offset = 0, data = []) => {
-    debugger;
     const res = {
       count: 0,
       next: 0,
@@ -66,7 +65,6 @@ const api = {
     };
 
     try {
-      //ok
       if (filters.name) {
         const targetData = res.results.length === 0 ? data : res.results;
         res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name));
@@ -89,7 +87,6 @@ const api = {
         }
         res.all = aux;
       }
-      //ok
       if (filters.type) {
         console.log("tipo")
         const a = await api.filterPokemonByType(filters.type, data);
@@ -125,7 +122,7 @@ const api = {
       const b = await a.json()
       return b;
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return false
     }
   },
@@ -141,7 +138,7 @@ const api = {
       }
       return res;
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return false
     }
   }
