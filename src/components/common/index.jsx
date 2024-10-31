@@ -61,20 +61,29 @@ const PokeProfile = styled.img`
   transform: scale(0.5);
   top: -50%;
 
+  @media (max-width: 320px) {
+    transform: scale(0.4);
+    top: -150%;
+  }
+
   @media (max-width: 768px) {
     transform: scale(0.4);
+    top: -100%;
   }
 
   @media (max-width: 415px) {
     transform: scale(0.4);
+    top: -100%;
   }
 
   @media (min-width: 768px) and (max-width: 1023px) {
     transform: scale(0.6);
+    top: -60%;
   }
 
   @media (min-width: 1024px) and (max-width: 1365px) {
     transform: scale(0.5);
+    top: -100%;
   }
 `;
 

@@ -30,13 +30,13 @@ const PokeModal = () => {
     const width = window.innerWidth;
 
     if ((320 <= width && width < 375) || (375 <= width && width < 425)) {
-      setProfileTop("-40%");
+      setProfileTop("-50%");
     } else if (425 <= width && width < 768) {
-      setProfileTop("-20%");
+      setProfileTop("-30%");
     } else if (768 <= width && width < 1024) {
-      setProfileTop("-20%");
+      setProfileTop("-50%");
     } else if (width >= 1024) {
-      setProfileTop("-60%");
+      setProfileTop("-35%");
     }
   };
 
@@ -208,34 +208,33 @@ const PokeModal = () => {
                 </StatsTitle>
                 <AudioPlayer audio={data?.cries?.latest} width={"100%"} />
               </Column>
+              <Column width={"100%"} align={"flex-start"}>
+                <StatsTitle>
+                  <i class="fa-solid fa-circle-radiation"></i> Weaknesses
+                </StatsTitle>
+                <Row
+                  width={"max-content"}
+                  style={{
+                    marginBottom: "16px",
+                  }}
+                >
+                  {weaknesses.map((item) => {
+                    return (
+                      <TypeMarker
+                        bg={colors.types[item]}
+                        rounded={true}
+                        style={{
+                          marginRight: "8px",
+                        }}
+                      >
+                        <img src={icons[item]} />
+                      </TypeMarker>
+                    );
+                  })}
+                </Row>
+              </Column>
             </Column>
           </Row>
-
-          <Column width={"100%"} align={"flex-start"}>
-            <StatsTitle>
-              <i class="fa-solid fa-circle-radiation"></i> Weaknesses
-            </StatsTitle>
-            <Row
-              width={"max-content"}
-              style={{
-                marginBottom: "16px",
-              }}
-            >
-              {weaknesses.map((item) => {
-                return (
-                  <TypeMarker
-                    bg={colors.types[item]}
-                    rounded={true}
-                    style={{
-                      marginRight: "8px",
-                    }}
-                  >
-                    <img src={icons[item]} />
-                  </TypeMarker>
-                );
-              })}
-            </Row>
-          </Column>
         </Column>
       </ModalContainer>
     </Overlay>
