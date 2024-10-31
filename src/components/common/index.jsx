@@ -75,7 +75,7 @@ const PokeProfile = styled.img`
     top: -100%;
   }
 
-  @media (min-width: 768px) and (max-width: 1023x) {
+  @media (min-width: 768px) and (max-width: 1024x) {
     transform: scale(0.6);
     top: -50%;
   }
