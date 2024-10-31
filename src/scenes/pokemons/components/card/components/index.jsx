@@ -14,6 +14,7 @@ const Card = styled.div`
   padding: 10px;
   position: relative;
   cursor: pointer;
+  transition: 0.3s;
 
   @media screen and (max-width: 768px) {
     width: 90%;

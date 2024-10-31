@@ -80,6 +80,7 @@ const Name = styled.h2`
   margin-top: ${(props) => props.marginTop ?? "30%"};
   word-wrap: break-word;
   white-space: nowrap;
+  overflow: hidden;
 `;
 
 const TypeMarker = styled.div`
@@ -149,6 +150,8 @@ const Overlay = styled.div`
   z-index: 9999999999999;
   width: 100vw;
   max-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 export {

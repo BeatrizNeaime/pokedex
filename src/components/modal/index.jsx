@@ -17,12 +17,14 @@ import { modalContext } from "../../contexts/modalContext";
 import icons from "../../constants/icons";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import AudioPlayer from "./../audioPlayer/index";
+import types from "./../../constants/types";
 
 const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { modal, data, setModal } = useContext(modalContext);
   const [color, setColor] = useState();
   const [weaknesses, setWeaknesses] = useState([]);
+  const [profileTop, setProfileTop] = useState();
 
   const formatOrder = (order) => {
     if (order < 10) {
@@ -39,10 +41,32 @@ const PokeModal = () => {
     setColor(colors.types[pokeType?.type?.name]);
   };
 
-  const getWeaknesses = () => {};
+  const getWeaknesses = () => {
+    data?.types.map((item) => {
+      const type = types[item.type.name];
+      setWeaknesses([...type.weakness]);
+    });
+  };
+
+  const getProfileTop = () => {
+    const width = window.innerWidth;
+    if (width < 320) {
+      setProfileTop("-70%");
+    } else if ((320 <= width && width < 375) || (375 <= width && width < 425)) {
+      setProfileTop("-45%");
+    } else if (425 <= width && width < 768) {
+      setProfileTop("-40%");
+    } else if (768 <= width && width < 1024) {
+      setProfileTop("-30%");
+    } else if (width >= 1024) {
+      setProfileTop("-40%");
+    }
+  };
 
   useEffect(() => {
     getColor();
+    getWeaknesses();
+    getProfileTop();
   }, [data]);
 
   if (!modal) return null;
@@ -59,13 +83,26 @@ const PokeModal = () => {
           e.stopPropagation();
         }}
       >
+        <i
+          class="fa-solid fa-circle-xmark"
+          style={{
+            position: "absolute",
+            right: "16px",
+            top: "16px",
+            fontSize: "24px",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            setModal(false);
+          }}
+        ></i>
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
-            top: desktop ? "" : "-50%",
+            top: profileTop,
           }}
         />
-        <Name marginTop={desktop ? "20%" : "25%"}>
+        <Name marginTop={desktop ? "25%" : "25%"}>
           ● {data.name.replaceAll("-", " ")} ●
         </Name>
         <PokeCode>#{formatOrder(data?.order)}</PokeCode>
@@ -178,7 +215,26 @@ const PokeModal = () => {
             <StatsTitle>
               <i class="fa-solid fa-circle-radiation"></i> Weaknesses
             </StatsTitle>
-            <Row></Row>
+            <Row
+              width={"max-content"}
+              style={{
+                marginBottom: "16px",
+              }}
+            >
+              {weaknesses.map((item) => {
+                return (
+                  <TypeMarker
+                    bg={colors.types[item]}
+                    rounded={true}
+                    style={{
+                      marginRight: "8px",
+                    }}
+                  >
+                    <img src={icons[item]} />
+                  </TypeMarker>
+                );
+              })}
+            </Row>
           </Column>
         </Column>
       </ModalContainer>

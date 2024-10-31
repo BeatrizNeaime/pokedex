@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   Button,
   Column,
@@ -24,11 +24,15 @@ const Filters = () => {
   const { pokemons, setPokemons, getData } = useContext(pokeContext);
   const { setLoading } = useContext(loadingContext);
 
-  const handleClick = async () => {
+  const handleFilters = async () => {
     setLoading(true);
     try {
-      const res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
-      console.log(res);
+      let res;
+      if (filters.name || filters.type || filters.habitat) {
+        res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
+      } else {
+        await getData();
+      }
       if (res.results.length > 0) {
         setPokemons((prev) => ({
           ...prev,
@@ -41,6 +45,7 @@ const Filters = () => {
         }));
       } else {
         setPokemons((prev) => ({
+          ...prev,
           all: [],
           results: [],
           offset: 0,
@@ -50,7 +55,7 @@ const Filters = () => {
         }));
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -65,6 +70,10 @@ const Filters = () => {
     });
     return;
   };
+
+  useEffect(() => {
+    handleFilters();
+  }, [filters]);
 
   return (
     <Column width={"100%"} gap={"32px"}>
@@ -86,7 +95,7 @@ const Filters = () => {
             height: "45px",
             width: desktop ? "10%" : "100%",
           }}
-          onClick={handleClick}
+          onClick={handleFilters}
         >
           <i className="fa fa-search"></i>
         </Button>
@@ -115,6 +124,9 @@ const Filters = () => {
               )}
               {filters.habitat && (
                 <SelectedFilter name={filters.habitat} type={"habitat"} />
+              )}
+              {filters.name && (
+                <SelectedFilter name={filters.name} type={"name"} />
               )}
             </Row>
             <OutlinedBtn
