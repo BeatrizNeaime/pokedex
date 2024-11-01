@@ -5,6 +5,7 @@ import Filters from './scenes/filters';
 import LandingPage from './scenes/landing/index';
 import Pokemons from './scenes/pokemons/index';
 import Controls from './scenes/controls';
+import Footer from './scenes/footer';
 import Navbar from './scenes/navbar';
 import Account from './scenes/account';
 
@@ -18,6 +19,7 @@ function App() {
       <Filters />
       <Pokemons />
       <Controls />
+      <Footer />
       <Account />
     </Layout>
   );
