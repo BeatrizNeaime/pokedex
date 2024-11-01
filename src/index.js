@@ -4,6 +4,7 @@ import { ModalContextProvider } from './contexts/modalContext';
 import { FilterContextProvider } from './contexts/filterContext';
 import { PokeContextProvider } from './contexts/pokeContext';
 import { LoadingContextProvider } from './contexts/loadingContext';
+import { AccountContextProvider } from './contexts/accountContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -11,7 +12,9 @@ root.render(
     <ModalContextProvider>
       <FilterContextProvider>
         <LoadingContextProvider>
-          <App />
+          <AccountContextProvider>
+            <App />
+          </AccountContextProvider>
         </LoadingContextProvider>
       </FilterContextProvider>
     </ModalContextProvider>

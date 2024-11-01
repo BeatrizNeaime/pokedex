@@ -3,11 +3,6 @@ import colors from "../../constants/colors";
 
 const Logo = styled.img`
   height: 100px;
-  position: absolute;
-  top: 1rem;
-  align-self: center;
-  justify-self: center;
-  object-fit: contain;
 
   @media screen and (max-width: 768px) {
     height: 60px;
@@ -157,6 +152,38 @@ const Overlay = styled.div`
   max-width: 100vw;
 `;
 
+const CloseButton = styled.i`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  cursor: pointer;
+`;
+
+const Input = styled.input`
+  height: 45px;
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 5px 10px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  position: relative;
+
+  &:focus {
+    border: none;
+  }
+
+  i {
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+`;
+
 export {
   Row,
   Button,
@@ -169,4 +196,6 @@ export {
   PokeCode,
   OutlinedBtn,
   Overlay,
+  CloseButton,
+  Input,
 };

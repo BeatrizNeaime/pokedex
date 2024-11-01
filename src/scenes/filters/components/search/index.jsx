@@ -1,6 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { Row } from "../../../../components/common";
-import { Input, InputContainer } from "./components";
+import { Row, Input } from "../../../../components/common";
 import { filterContext } from "./../../../../contexts/filterContext";
 import { pokeContext } from "../../../../contexts/pokeContext";
 import { useMediaQuery } from "../../../../hooks/useMediaQuery";
@@ -31,18 +30,17 @@ const Search = () => {
 
   return (
     <Row width={desktop ? "50%" : "100%"} gap={"8px"}>
-      <InputContainer>
-        <Input
-          type="text"
-          placeholder="Search"
-          width={"90%"}
-          ref={nameRef}
-          onBlur={handleBlur}
-        />
+      <Input
+        type="text"
+        placeholder="Search"
+        width={"90%"}
+        ref={nameRef}
+        onBlur={handleBlur}
+      >
         {filters.name && (
           <i class="fa-solid fa-circle-xmark" onClick={clearSearch}></i>
         )}
-      </InputContainer>
+      </Input>
     </Row>
   );
 };

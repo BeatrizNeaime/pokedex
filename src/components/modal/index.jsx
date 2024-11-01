@@ -9,6 +9,7 @@ import {
   TypeMarker,
   PokeCode,
   Overlay,
+  CloseButton,
 } from "../common";
 import Stats from "./../../scenes/pokemons/components/card/components/Stats";
 import GraphData from "../graphData";
@@ -82,19 +83,12 @@ const PokeModal = () => {
           e.stopPropagation();
         }}
       >
-        <i
-          class="fa-solid fa-circle-xmark"
-          style={{
-            position: "absolute",
-            top: "8px",
-            right: "8px",
-            color: colors.gray[400],
-            cursor: "pointer",
-          }}
+        <CloseButton
+          className="fa-solid fa-circle-xmark"
           onClick={() => {
             setModal(false);
           }}
-        ></i>
+        ></CloseButton>
 
         <PokeProfile
           src={data?.sprites?.other?.["official-artwork"]?.front_default}
