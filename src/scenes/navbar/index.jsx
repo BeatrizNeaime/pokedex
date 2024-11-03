@@ -4,10 +4,11 @@ import colors from "../../constants/colors";
 import { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { accountContext } from "../../contexts/accountContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const { setData } = useContext(accountContext);
+  const { data, setData } = useContext(accountContext);
   const [logoSize, setLogoSize] = useState("100px");
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const Navbar = () => {
       if (window.scrollY > 50) {
         setLogoSize(desktop ? "50px" : "45px");
       } else {
-        setLogoSize(desktop ? "100px" : "60px");
+        setLogoSize(desktop ? "80px" : "60px");
       }
     };
 
@@ -35,23 +36,37 @@ const Navbar = () => {
       }}
       width={"100vw"}
     >
-      <Logo
-        src={logo}
-        style={{
-          height: logoSize,
-          transition: "height 0.5s",
-        }}
-      />
+      <Link to="/">
+        <Logo
+          src={logo}
+          style={{
+            height: logoSize,
+            transition: "height 0.5s",
+          }}
+        />
+      </Link>
 
-      <Button
-        style={{
-          position: "absolute",
-          right: "5%",
-        }}
-        onClick={() => setData((prev) => ({ ...prev, modal: true }))}
-      >
-        Login
-      </Button>
+      {data.isLogged ? (
+        <Link to="/account" style={{ position: "absolute", right: "5%" }}>
+          <Button
+            style={{
+              borderRadius: "50%",
+            }}
+          >
+            <i class="fa-solid fa-user"></i>
+          </Button>
+        </Link>
+      ) : (
+        <Button
+          style={{
+            position: "absolute",
+            right: "5%",
+          }}
+          onClick={() => setData((prev) => ({ ...prev, modalOpen: true }))}
+        >
+          Login
+        </Button>
+      )}
     </Row>
   );
 };

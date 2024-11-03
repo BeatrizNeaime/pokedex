@@ -14,6 +14,15 @@ const AccountModalStyle = styled.div`
   box-shadow: 0 8px 32px 0 rgba(8, 8, 8, 0.37);
   position: relative;
   margin: 0;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    max-height: 90vh;
+
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 export { AccountModalStyle };

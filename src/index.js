@@ -5,6 +5,7 @@ import { FilterContextProvider } from './contexts/filterContext';
 import { PokeContextProvider } from './contexts/pokeContext';
 import { LoadingContextProvider } from './contexts/loadingContext';
 import { AccountContextProvider } from './contexts/accountContext';
+import { ToastContextProvider } from './contexts/toastContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
       <FilterContextProvider>
         <LoadingContextProvider>
           <AccountContextProvider>
-            <App />
+            <ToastContextProvider>
+              <App />
+            </ToastContextProvider>
           </AccountContextProvider>
         </LoadingContextProvider>
       </FilterContextProvider>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import colors from "../../constants/colors";
 
 const Logo = styled.img`
-  height: 100px;
+  height: 80px;
 
   @media screen and (max-width: 768px) {
     height: 60px;
@@ -156,7 +156,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999999999999;
+  z-index: 1000000000000;
   width: 100vw;
   max-width: 100vw;
 `;
@@ -193,6 +193,16 @@ const Input = styled.input`
   }
 `;
 
+const PageTitle = styled.h1`
+  color: white;
+  font-size: 40px;
+  margin-bottom: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 24px;
+  }
+`;
+
 export {
   Row,
   Button,
@@ -207,4 +217,5 @@ export {
   Overlay,
   CloseButton,
   Input,
+  PageTitle,
 };

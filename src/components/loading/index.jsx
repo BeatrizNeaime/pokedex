@@ -16,7 +16,11 @@ const LoadingImage = styled.img`
 
 const Loading = () => {
   return (
-    <Card>
+    <Card
+      style={{
+        border: "none",
+      }}
+    >
       <LoadingImage src={pokeball} alt="loading" />
     </Card>
   );

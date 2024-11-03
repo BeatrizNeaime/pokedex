@@ -4,45 +4,122 @@ import {
   CloseButton,
   Column,
   Overlay,
-  StatsTitle,
+  StatsTitle
 } from "../../components/common";
 import { accountContext } from "../../contexts/accountContext";
 import { AccountModalStyle } from "./components";
 import InputGroup from "../../components/inputGroup";
+import serverApi from "../../services/serverApi";
+import { loadingContext } from "./../../contexts/loadingContext";
+import Loading from "../../components/loading";
+import { toastContext } from "../../contexts/toastContext";
 
 const Account = () => {
   const { data, setData } = useContext(accountContext);
+  const { loading, setLoading } = useContext(loadingContext);
+  const { setToast } = useContext(toastContext);
   const [form, setForm] = useState("sign-in");
   const [loginData, setLoginData] = useState({
-    username: null,
-    password: null,
+    username: "",
+    password: "",
   });
   const [signUpData, setSignUpData] = useState({
-    name: null,
-    username: null,
-    password: null,
+    name: "",
+    username: "",
+    password: "",
   });
 
   const closeModal = () => {
-    setData((prev) => {
-      return {
-        ...prev,
-        modal: false,
-      };
-    });
+    setData((prev) => ({
+      ...prev,
+      modalOpen: false,
+    }));
   };
 
-  if (!data.modal) {
+  const setContextData = (res) => {
+    setData((prev) => ({
+      ...prev,
+      modalOpen: false,
+      isLogged: true,
+      user: {
+        id: res.id,
+        name: res.name,
+        username: res.username,
+        token: res.token,
+      },
+    }));
+  };
+
+  const signUp = async () => {
+    setLoading(true);
+    try {
+      const res = await serverApi.registerUser(signUpData);
+      if (res) {
+        setToast({
+          open: true,
+          title: "Success!",
+          message: "User successfully registered!",
+          type: "success",
+        });
+        setContextData(res);
+      }
+    } catch (error) {
+      console.error(error);
+      setToast({
+        open: true,
+        title: "Error!",
+        message: error,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signIn = async () => {
+    setLoading(true);
+    try {
+      const res = await serverApi.loginUser(loginData);
+      console.log(res);
+      if (res) {
+        setToast({
+          open: true,
+          title: "Success!",
+          message: "User successfully logged in!",
+          type: "success",
+        });
+      }
+      setContextData(res);
+    } catch (error) {
+      console.error(error);
+      setToast({
+        open: true,
+        title: "Error!",
+        message: error,
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!data.modalOpen) {
     return null;
+  }
+
+  if (loading) {
+    return (
+      <Overlay>
+        <AccountModalStyle>
+          <Loading />
+        </AccountModalStyle>
+      </Overlay>
+    );
   }
 
   return (
     <Overlay onClick={closeModal}>
-      <AccountModalStyle
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <AccountModalStyle onClick={(e) => e.stopPropagation()}>
         <CloseButton
           className="fa-solid fa-circle-xmark"
           onClick={closeModal}
@@ -50,20 +127,9 @@ const Account = () => {
         <h1>Account</h1>
 
         {form === "sign-in" && (
-          <Column
-            gap={"16px"}
-            width={"90%"}
-            style={{
-              marginTop: "32px",
-            }}
-          >
-            <StatsTitle
-              style={{
-                alignSelf: "flex-start",
-              }}
-            >
-              {" "}
-              <i class="fa-solid fa-user"></i> Sign-in
+          <Column gap={"16px"} width={"90%"} style={{ marginTop: "32px" }}>
+            <StatsTitle style={{ alignSelf: "flex-start" }}>
+              <i className="fa-solid fa-user"></i> Sign-in
             </StatsTitle>
 
             <InputGroup
@@ -71,12 +137,11 @@ const Account = () => {
                 label: "Username",
                 placeholder: "Ash123",
                 value: loginData.username,
-                onBlur: () => {
-                  setLoginData({
-                    ...loginData,
-                    username: loginData.username,
-                  });
-                },
+                onChange: (e) =>
+                  setLoginData((prev) => ({
+                    ...prev,
+                    username: e.target.value,
+                  })),
               }}
             />
             <InputGroup
@@ -84,24 +149,16 @@ const Account = () => {
                 label: "Password",
                 placeholder: "********",
                 value: loginData.password,
-                onBlur: () => {
-                  setLoginData({
-                    ...loginData,
-                    password: loginData.password,
-                  });
-                },
+                onChange: (e) =>
+                  setLoginData((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  })),
                 type: "password",
               }}
             />
-            <Button
-              style={{
-                width: "100%",
-              }}
-              onClick={() => {
-                console.log("Login data", loginData);
-              }}
-            >
-              <i class="fa-solid fa-sign-in"></i> Sign-in
+            <Button style={{ width: "100%" }} onClick={signIn}>
+              <i className="fa-solid fa-sign-in"></i> Sign-in
             </Button>
 
             <p>
@@ -112,9 +169,7 @@ const Account = () => {
                   textDecoration: "underline",
                   fontWeight: "bold",
                 }}
-                onClick={() => {
-                  setForm("sign-up");
-                }}
+                onClick={() => setForm("sign-up")}
               >
                 Sign-up
               </span>
@@ -123,45 +178,47 @@ const Account = () => {
         )}
 
         {form === "sign-up" && (
-          <Column
-            gap={"16px"}
-            width={"90%"}
-            style={{
-              marginTop: "32px",
-            }}
-          >
-            <StatsTitle
-              style={{
-                alignSelf: "flex-start",
-              }}
-            >
-              {" "}
-              <i class="fa-solid fa-user"></i> Sign-up
+          <Column gap={"16px"} width={"90%"} style={{ marginTop: "32px" }}>
+            <StatsTitle style={{ alignSelf: "flex-start" }}>
+              <i className="fa-solid fa-user"></i> Sign-up
             </StatsTitle>
 
+            <InputGroup
+              data={{
+                label: "Name",
+                placeholder: "Ash123",
+                value: signUpData.name,
+                onChange: (e) =>
+                  setSignUpData((prev) => ({ ...prev, name: e.target.value })),
+              }}
+            />
             <InputGroup
               data={{
                 label: "Username",
                 placeholder: "Ash123",
                 value: signUpData.username,
-                onBlur: setSignUpData,
+                onChange: (e) =>
+                  setSignUpData((prev) => ({
+                    ...prev,
+                    username: e.target.value,
+                  })),
               }}
             />
             <InputGroup
               data={{
                 label: "Password",
                 placeholder: "********",
-                value: loginData.password,
-                onBlur: setSignUpData,
+                value: signUpData.password,
                 type: "password",
+                onChange: (e) =>
+                  setSignUpData((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  })),
               }}
             />
-            <Button
-              style={{
-                width: "100%",
-              }}
-            >
-              <i class="fa-solid fa-sign-in"></i> Sign-up
+            <Button style={{ width: "100%" }} onClick={signUp}>
+              <i className="fa-solid fa-sign-in"></i> Sign-up
             </Button>
 
             <p>
@@ -172,9 +229,7 @@ const Account = () => {
                   textDecoration: "underline",
                   fontWeight: "bold",
                 }}
-                onClick={() => {
-                  setForm("sign-in");
-                }}
+                onClick={() => setForm("sign-in")}
               >
                 Sign-in
               </span>

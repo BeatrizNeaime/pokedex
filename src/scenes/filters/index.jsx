@@ -13,7 +13,7 @@ import { filterContext } from "../../contexts/filterContext";
 import { habitats } from "../../constants/habitats";
 import HabitatsDropdown from "./components/dropdown/habitats";
 import SelectedFilter from "./components/selectedFilter";
-import api from "./../../services/api";
+import pokeApi from "../../services/pokeApi";
 import { pokeContext } from "../../contexts/pokeContext";
 import { loadingContext } from "./../../contexts/loadingContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -29,7 +29,7 @@ const Filters = () => {
     try {
       let res;
       if (filters.name || filters.type || filters.habitat) {
-        res = await api.getFilteredPokemons(filters, 0, pokemons.fixed);
+        res = await pokeApi.getFilteredPokemons(filters, 0, pokemons.fixed);
       } else {
         await getData();
       }

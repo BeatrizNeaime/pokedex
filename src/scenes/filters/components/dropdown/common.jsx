@@ -43,7 +43,7 @@ const DropdownList = styled.ul`
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 100;
   transition: all 0.3s ease;
   display: none;
 

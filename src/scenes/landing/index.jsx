@@ -5,7 +5,7 @@ import {
   PokeName,
   RightSide,
 } from "./components";
-import api from "./../../services/api";
+import pokeApi from "../../services/pokeApi";
 import { useEffect, useState } from "react";
 import colors, { createGradient } from "./../../constants/colors";
 import { Row, TypeMarker, Column, Button } from "../../components/common";
@@ -25,7 +25,7 @@ const LandingPage = () => {
   });
 
   const getRandomPokemon = async () => {
-    const pokemon = await api.getRandomPokemon();
+    const pokemon = await pokeApi.getRandomPokemon();
     if (pokemon) {
       setPokemon(pokemon);
       const pokeType = pokemon?.types?.find((x) => {

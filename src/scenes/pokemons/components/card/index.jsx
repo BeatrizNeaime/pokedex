@@ -1,7 +1,7 @@
 import colors, { createGradient } from "../../../../constants/colors";
 import { Card } from "./components";
 import { useContext, useEffect, useState } from "react";
-import api from "./../../../../services/api";
+import pokeApi from "../../../../services/pokeApi";
 import {
   Row,
   PokeProfile,
@@ -29,7 +29,7 @@ const PokeCard = ({ data }) => {
   const getPokemon = async () => {
     setLoading(true);
     try {
-      const response = await api.getPokemon(data.url);
+      const response = await pokeApi.getPokemon(data.url);
       if (response) {
         setPokeData(response);
         const pokeType = response?.types?.find((x) => x.slot === 1);

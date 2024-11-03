@@ -1,6 +1,7 @@
+import { forwardRef } from "react";
 import { Column, Input } from "../common";
 
-const InputGroup = ({ data }) => {
+const InputGroup = forwardRef(({ data }, ref) => {
   return (
     <Column width={"100%"} align={"flex-start"} gap={"8px"}>
       <label
@@ -17,9 +18,10 @@ const InputGroup = ({ data }) => {
         onBlur={data?.onBlur}
         value={data?.value}
         type={data?.type}
+        ref={ref}
       />
     </Column>
   );
-};
+});
 
 export default InputGroup;

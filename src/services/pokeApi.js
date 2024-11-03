@@ -1,4 +1,4 @@
-import { habitats } from './../constants/habitats';
+import { habitats } from '../constants/habitats';
 
 const url = "https://pokeapi.co/api/v2/"
 const itemsPerPage = 10
@@ -11,7 +11,8 @@ const options = {
   }
 }
 
-const api = {
+
+const pokeApi = {
   getPokemon: async (endpoint) => {
     const a = await fetch(endpoint, options.get)
     const b = await a.json()
@@ -39,11 +40,11 @@ const api = {
     }
   },
   filterPokemonByHabitat: async (habitat) => {
-    const res = await api.getPokemonsByHabitat(habitat);
+    const res = await pokeApi.getPokemonsByHabitat(habitat);
     return res ? res.pokemon_species : [];
   },
   filterPokemonByType: async (type, data = [], res) => {
-    const pokemonsByType = await api.getPokemonsByType(type);
+    const pokemonsByType = await pokeApi.getPokemonsByType(type);
     if (!pokemonsByType) {
       return [];
     }
@@ -72,8 +73,8 @@ const api = {
 
       if (filters.habitat) {
         const aux = []
-        const a = await api.filterPokemonByHabitat(filters.habitat);
-        if (res.all.length == 0) {
+        const a = await pokeApi.filterPokemonByHabitat(filters.habitat);
+        if (res.all.length === 0) {
           console.clear()
           a.map((pokemon) => aux.push({ name: pokemon.name, url: pokemon.url.replace("-species", "") }));
         } else {
@@ -89,7 +90,7 @@ const api = {
       }
       if (filters.type) {
         console.log("tipo")
-        const a = await api.filterPokemonByType(filters.type, data);
+        const a = await pokeApi.filterPokemonByType(filters.type, data);
         if (res.all.length === 0 && (!filters.habitat && !filters.name)) {
           a.map((pokemon) => res.all.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url }));
         } else {
@@ -141,7 +142,7 @@ const api = {
       console.error(error)
       return false
     }
-  }
+  },
 }
 
-export default api
+export default pokeApi
