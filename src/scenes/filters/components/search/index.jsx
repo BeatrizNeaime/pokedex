@@ -36,11 +36,7 @@ const Search = () => {
         width={"90%"}
         ref={nameRef}
         onBlur={handleBlur}
-      >
-        {filters.name && (
-          <i class="fa-solid fa-circle-xmark" onClick={clearSearch}></i>
-        )}
-      </Input>
+      />
     </Row>
   );
 };

@@ -1,5 +1,5 @@
 
-const url = "https://localhost:7280/"
+const url = "http://localhost:5284/"
 
 const postOptions = {
   auth: {
@@ -16,6 +16,22 @@ const postOptions = {
       "Content-Type": "application/json",
     },
     body: null
+  }
+}
+
+const getOptions = {
+  auth: {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + localStorage.getItem("token")
+    }
+  },
+  get: {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
   }
 }
 
@@ -52,6 +68,19 @@ const serverApi = {
         sessionStorage.setItem("id", b.id)
         sessionStorage.setItem("name", b.name)
       }
+      return b;
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  },
+  getCapturedPokemons: async () => {
+    try {
+      const a = await fetch(`${url}pokemon/captured`,
+        getOptions.get
+      )
+      const b = await a.json()
+      console.log(b)
       return b;
     } catch (error) {
       console.error(error)

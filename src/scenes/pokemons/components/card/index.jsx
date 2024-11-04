@@ -14,11 +14,14 @@ import icons from "../../../../constants/icons";
 import { loadingContext } from "../../../../contexts/loadingContext";
 import Loading from "../../../../components/loading";
 import { useMediaQuery } from "../../../../hooks/useMediaQuery";
+import { pokeContext } from "../../../../contexts/pokeContext";
+import pokeball from "../../../../assets/img/pokeball.png";
 
 const PokeCard = ({ data }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { setModal, setData } = useContext(modalContext);
   const { loading, setLoading } = useContext(loadingContext);
+  const { pokemons } = useContext(pokeContext);
   const [pokeData, setPokeData] = useState();
 
   const [aux, setAux] = useState({
@@ -26,12 +29,29 @@ const PokeCard = ({ data }) => {
     image: [],
   });
 
+  const verifyCapture = () => {
+    const captured = pokemons.captured.find(
+      (x) => x.pokemonName.toLowerCase() === pokeData.name.toLowerCase()
+    );
+    if (captured) {
+      setPokeData((prev) => ({
+        ...prev,
+        captured: {
+          status: true,
+          capturedBy: captured.user.username,
+          capturedAt: captured.capturedAt,
+        },
+      }));
+    }
+  };
+
   const getPokemon = async () => {
     setLoading(true);
     try {
       const response = await pokeApi.getPokemon(data.url);
       if (response) {
-        setPokeData(response);
+        setPokeData((prev) => ({ ...prev, ...response }));
+        verifyCapture();
         const pokeType = response?.types?.find((x) => x.slot === 1);
         setAux((prev) => ({
           ...prev,
@@ -65,6 +85,19 @@ const PokeCard = ({ data }) => {
       bg={createGradient(aux.color, colors.blue[900])}
       onClick={handleClick}
     >
+      {pokeData?.captured?.status && (
+        <img
+          src={pokeball}
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            width: "20px",
+            height: "20px",
+          }}
+        />
+      )}
+
       <PokeProfile
         src={pokeData?.sprites?.other?.["official-artwork"]?.front_default}
         style={{

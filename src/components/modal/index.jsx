@@ -19,6 +19,7 @@ import icons from "../../constants/icons";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import AudioPlayer from "./../audioPlayer/index";
 import types from "./../../constants/types";
+import CapturedInfo from "./components/capturedInfo";
 
 const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
@@ -206,12 +207,7 @@ const PokeModal = () => {
                 <StatsTitle>
                   <i class="fa-solid fa-circle-radiation"></i> Weaknesses
                 </StatsTitle>
-                <Row
-                  width={"max-content"}
-                  style={{
-                    marginBottom: "16px",
-                  }}
-                >
+                <Row width={"max-content"}>
                   {weaknesses.map((item) => {
                     return (
                       <TypeMarker
@@ -229,6 +225,13 @@ const PokeModal = () => {
               </Column>
             </Column>
           </Row>
+
+          {data?.captured?.status && (
+            <CapturedInfo
+              name={data?.captured?.username}
+              date={data?.captured?.capturedAt}
+            />
+          )}
         </Column>
       </ModalContainer>
     </Overlay>

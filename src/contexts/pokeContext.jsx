@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import pokeApi from "../services/pokeApi";
+import serverApi from "../services/serverApi";
 
 export const pokeContext = createContext();
 
@@ -10,12 +11,24 @@ export const PokeContextProvider = ({ children }) => {
     previous: null,
     results: [],
     all: [],
+    captured: [],
   });
+
+  const getCapturedPokemons = async () => {
+    const res = await serverApi.getCapturedPokemons();
+    if (res) {
+      setPokemons((prev) => ({
+        ...prev,
+        captured: res,
+      }));
+    }
+  };
 
   const getData = async () => {
     if (pokemons.all.length === 0) {
       const res = await pokeApi.getAllPokemons();
       if (res) {
+        await getCapturedPokemons();
         setPokemons((prev) => ({
           ...prev,
           count: res.count,
