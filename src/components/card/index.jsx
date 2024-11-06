@@ -9,8 +9,8 @@ import { loadingContext } from "../../contexts/loadingContext";
 import Loading from "../loading";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { pokeContext } from "../../contexts/pokeContext";
-import pokeball from "../../assets/img/pokeball.png";
 import { Card } from "./components";
+import pokeball from "../../assets/img/pokeball.png";
 
 const PokeCard = ({ data }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
@@ -25,18 +25,13 @@ const PokeCard = ({ data }) => {
   });
 
   const verifyCapture = async (name) => {
-    const captured = pokemons.captured.find(
-      (x) => x.pokemonName.toLowerCase() === name.toLowerCase()
-    );
-    if (captured?.pokemonName === name) {
-      setPokeData((prev) => ({
-        ...prev,
-        captured: {
-          status: true,
-          username: captured.user.username,
-          capturedAt: captured.capturedAt,
-        },
-      }));
+    const captured = pokemons.captured.find((x) => x.pokemonName === name);
+    if (captured) {
+      return {
+        captured: true,
+        username: captured.user.username,
+        capturedAt: captured.capturedAt,
+      };
     }
   };
 
@@ -45,13 +40,13 @@ const PokeCard = ({ data }) => {
     try {
       const response = await pokeApi.getPokemon(data.url);
       if (response) {
-        setPokeData((prev) => ({ ...prev, ...response }));
+        const captured = await verifyCapture(response.name);
+        setPokeData((prev) => ({ ...prev, ...response, captured: captured }));
         const pokeType = response?.types?.find((x) => x.slot === 1);
         setAux((prev) => ({
           ...prev,
           color: colors.types[pokeType?.type?.name],
         }));
-        verifyCapture(response.name);
       } else {
         return;
       }
@@ -69,7 +64,6 @@ const PokeCard = ({ data }) => {
 
   useEffect(() => {
     getPokemon();
-    console.log(pokeData);
   }, [data.url]);
 
   if (loading) {

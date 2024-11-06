@@ -51,7 +51,6 @@ const EditAccount = () => {
         });
         closeModal();
       } else {
-        console.log(res.message);
         setToast({
           open: true,
           title: "Error",
@@ -60,7 +59,6 @@ const EditAccount = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       setToast({
         open: true,
         title: "Error",

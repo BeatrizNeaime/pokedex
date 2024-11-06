@@ -65,13 +65,16 @@ const serverApi = {
         postOptions.post
       )
       const b = await a.json()
+      if (a.status !== 200) {
+        return { message: b.message, status: false }
+      }
       if (b.token) {
         sessionStorage.setItem("token", b.token)
         sessionStorage.setItem("user", b.username)
         sessionStorage.setItem("id", b.id)
         sessionStorage.setItem("name", b.name)
       }
-      return b;
+      return { message: "Signed-up in successfully!", status: true, data: b }
     } catch (error) {
       console.error(error)
       return false
@@ -84,16 +87,16 @@ const serverApi = {
         postOptions.post
       )
       const b = await a.json()
-      if (b.token) {
-        sessionStorage.setItem("token", b.token)
-        sessionStorage.setItem("user", b.username)
-        sessionStorage.setItem("id", b.id)
-        sessionStorage.setItem("name", b.name)
+      if (a.status !== 200) {
+        return { message: b.message, status: false }
       }
-      return b;
+      sessionStorage.setItem("token", b.token)
+      sessionStorage.setItem("user", b.username)
+      sessionStorage.setItem("id", b.id)
+      sessionStorage.setItem("name", b.name)
+      return { message: "Logged in successfully!", status: true, data: b }
     } catch (error) {
-      console.error(error)
-      return false
+      return { message: error, status: false }
     }
   },
   getCapturedPokemons: async () => {
@@ -102,8 +105,12 @@ const serverApi = {
         getOptions.get
       )
       const b = await a.json()
-      console.log(b)
-      return b;
+
+      if (a.status !== 200) {
+        return { message: b.message, status: false }
+      }
+
+      return { message: "Pokemons fetched successfully!", status: true, data: b }
     } catch (error) {
       console.error(error)
       return false
@@ -111,7 +118,6 @@ const serverApi = {
   },
   capturePokemon: async (pokemonName) => {
     try {
-      debugger;
       postOptions.auth.body = JSON.stringify({ pokemonName: pokemonName, userId: sessionStorage.getItem("id") })
       const a = await fetch(`${url}pokemon/capture`, postOptions.auth)
       const b = await a.json()
@@ -138,7 +144,6 @@ const serverApi = {
     }
   },
   updateAccount: async (data) => {
-    console.log(data)
     try {
       patchOptions.auth.body = JSON.stringify({
         id: sessionStorage.getItem("id"),
@@ -153,28 +158,29 @@ const serverApi = {
         sessionStorage.setItem("user", b.username)
         sessionStorage.setItem("name", b.name)
         return { message: "Account updated successfully!", status: true }
-      } else if (a.status === 401) {
-        return { message: "Unauthorized", status: false }
       } else {
         return { message: b.message, status: false }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return error
     }
   },
   deleteAccount: async (password) => {
     try {
-      debugger
       deleteOptions.auth.body = JSON.stringify({
         id: sessionStorage.getItem("id"),
         password: password
       })
       const a = await fetch(`${url}user/delete`, deleteOptions.auth)
+      const b = await a.json()
 
-      if (a.ok) {
-        return true
+      if (a.status !== 200) {
+        return { message: b.message, status: false }
       }
+
+      sessionStorage.clear()
+      return { message: "Account deleted successfully!", status: true }
 
     } catch (error) {
       console.error(error)

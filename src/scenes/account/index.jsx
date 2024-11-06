@@ -52,55 +52,46 @@ const Account = () => {
 
   const signUp = async () => {
     setLoading(true);
-    try {
-      const res = await serverApi.registerUser(signUpData);
-      if (res) {
-        setToast({
-          open: true,
-          title: "Success!",
-          message: "User successfully registered!",
-          type: "success",
-        });
-        setContextData(res);
-      }
-    } catch (error) {
-      console.error(error);
+    const res = await serverApi.registerUser(signUpData);
+    if (res.status) {
+      setToast({
+        open: true,
+        title: "Success!",
+        message: "User successfully registered!",
+        type: "success",
+      });
+      setContextData(res.data);
+    } else {
       setToast({
         open: true,
         title: "Error!",
-        message: error,
+        message: res.message,
         type: "error",
       });
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const signIn = async () => {
     setLoading(true);
-    try {
-      const res = await serverApi.loginUser(loginData);
-      console.log(res);
-      if (res) {
-        setToast({
-          open: true,
-          title: "Success!",
-          message: "User successfully logged in!",
-          type: "success",
-        });
-      }
-      setContextData(res);
-    } catch (error) {
-      console.error(error);
+    const res = await serverApi.loginUser(loginData);
+    if (res.status) {
+      setToast({
+        open: true,
+        title: "Success!",
+        message: "User successfully logged in!",
+        type: "success",
+      });
+      setContextData(res.data);
+    } else {
       setToast({
         open: true,
         title: "Error!",
-        message: error,
+        message: res.message,
         type: "error",
       });
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   if (!accountData.modalOpen) {

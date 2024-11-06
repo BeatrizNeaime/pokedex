@@ -27,7 +27,7 @@ const AccountPage = () => {
         setPokemonsCaptured(captured);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -147,17 +147,24 @@ const AccountPage = () => {
                 textDecoration: "underline",
                 textDecorationColor: colors.types.ground,
                 textDecorationThickness: "2px",
-                marginBottom: "16px",
+                marginBottom: "32px",
               }}
             >
               My Pokémon Collection
             </h2>
           </Row>
-          <Row width={"100%"} justify={"flex-start"} gap={"8px"}>
+          <Row
+            width={"100%"}
+            justify={"flex-start"}
+            gap={"104px 8px"}
+            style={{
+              flexWrap: "wrap",
+            }}
+          >
             {pokemonsCaptured.length > 0 ? (
-              pokemonsCaptured.map((pokemon) => (
+              pokemonsCaptured.map((pokemon, index) => (
                 <PokeCard
-                  key={pokemon.id}
+                  key={index}
                   data={{
                     name: pokemon.pokemonName,
                     url: pokemon.pokemonUrl,

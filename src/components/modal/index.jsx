@@ -23,14 +23,13 @@ import types from "./../../constants/types";
 import CapturedInfo from "./components/capturedInfo";
 import { accountContext } from "./../../contexts/accountContext";
 import Loading from "../loading";
-import { pokeContext } from "../../contexts/pokeContext";
 import { toastContext } from "./../../contexts/toastContext";
+import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 
 const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { modal, data: modalData, setModal } = useContext(modalContext);
   const { accountData, setAccountData } = useContext(accountContext);
-  const { capturePokemon } = useContext(pokeContext);
   const { setToast } = useContext(toastContext);
   const [color, setColor] = useState();
   const [weaknesses, setWeaknesses] = useState([]);
@@ -73,11 +72,26 @@ const PokeModal = () => {
     });
   };
 
+  const capturePokemon = async (userId, pokemonName, speciesUrl) => {
+    const conn = new HubConnectionBuilder()
+      .withUrl("http://localhost:5284/pokemonHub")
+      .configureLogging(LogLevel.Information)
+      .withAutomaticReconnect()
+      .build();
+
+    await conn.start();
+    await conn.invoke("CapturePokemon", {
+      userId: parseInt(userId),
+      pokemonName: pokemonName,
+      pokemonUrl: `https://pokeapi.co/api/v2/pokemon/${speciesUrl}/`,
+    });
+  };
+
   const tryCapturePokemon = async () => {
     if (accountData.isLogged) {
       setLoading(true);
       try {
-        await capturePokemon(accountData.user.id, modalData.name);
+        await capturePokemon(accountData.user.id, modalData.name, modalData.id);
       } catch (error) {
         console.error(error);
         setToast({
@@ -274,14 +288,14 @@ const PokeModal = () => {
             </Column>
           </Row>
 
-          {modalData?.captured?.status && (
+          {modalData?.captured && (
             <CapturedInfo
               name={modalData?.captured?.username}
               date={modalData?.captured?.capturedAt}
             />
           )}
 
-          {!modalData?.captured?.status && (
+          {!modalData?.captured && (
             <Button
               style={{ width: "100%", marginBottom: "8px" }}
               onClick={tryCapturePokemon}
