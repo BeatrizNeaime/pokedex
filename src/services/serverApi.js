@@ -1,12 +1,23 @@
 
 const url = "http://localhost:5284/"
 
+const patchOptions = {
+  auth: {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + sessionStorage.getItem("token")
+    },
+    body: null
+  }
+}
+
 const postOptions = {
   auth: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token")
+      "Authorization": "Bearer " + sessionStorage.getItem("token")
     },
     body: null
   },
@@ -24,7 +35,7 @@ const getOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + sessionStorage.getItem("token")
+      "Authorization": `Bearer ${sessionStorage.getItem("token")}`
     }
   },
   get: {
@@ -32,6 +43,17 @@ const getOptions = {
     headers: {
       "Content-Type": "application/json",
     }
+  }
+}
+
+const deleteOptions = {
+  auth: {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+    },
+    body: null
   }
 }
 
@@ -98,6 +120,60 @@ const serverApi = {
         return { message: b.message, status: true }
       } else if (a.status === 401) {
         return { message: "Unauthorized", status: false }
+      }
+
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  },
+  getCapturedPokemonsByUser: async (userId) => {
+    try {
+      const a = await fetch(`${url}pokemon/captured-by/${userId}`, getOptions.auth)
+      const b = await a.json()
+      return b;
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  },
+  updateAccount: async (data) => {
+    console.log(data)
+    try {
+      patchOptions.auth.body = JSON.stringify({
+        id: sessionStorage.getItem("id"),
+        name: data.name,
+        username: data.username,
+        password: data.password
+      })
+      const a = await fetch(`${url}user/update`, patchOptions.auth)
+      const b = await a.json()
+
+      if (a.status === 200) {
+        sessionStorage.setItem("user", b.username)
+        sessionStorage.setItem("name", b.name)
+        return { message: "Account updated successfully!", status: true }
+      } else if (a.status === 401) {
+        return { message: "Unauthorized", status: false }
+      } else {
+        return { message: b.message, status: false }
+      }
+    } catch (error) {
+      console.log(error);
+      return error
+    }
+  },
+  deleteAccount: async (password) => {
+    try {
+      debugger
+      deleteOptions.auth.body = JSON.stringify({
+        id: sessionStorage.getItem("id"),
+        password: password
+      })
+      const a = await fetch(`${url}user/delete`, deleteOptions.auth)
+
+      if (a.ok) {
+        return true
       }
 
     } catch (error) {

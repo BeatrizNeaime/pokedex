@@ -1,5 +1,5 @@
 import { PageContainer } from "./components";
-import PokeCard from "./components/card";
+import PokeCard from "../../components/card";
 import { Name, Row } from "../../components/common";
 import { useContext } from "react";
 import { pokeContext } from "../../contexts/pokeContext";

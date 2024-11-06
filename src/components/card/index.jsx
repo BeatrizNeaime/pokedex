@@ -1,21 +1,16 @@
-import colors, { createGradient } from "../../../../constants/colors";
-import { Card } from "./components";
+import colors, { createGradient } from "../../constants/colors";
 import { useContext, useEffect, useState } from "react";
-import pokeApi from "../../../../services/pokeApi";
-import {
-  Row,
-  PokeProfile,
-  Name,
-  TypeMarker,
-} from "../../../../components/common";
-import Stats from "./components/Stats";
-import { modalContext } from "../../../../contexts/modalContext";
-import icons from "../../../../constants/icons";
-import { loadingContext } from "../../../../contexts/loadingContext";
-import Loading from "../../../../components/loading";
-import { useMediaQuery } from "../../../../hooks/useMediaQuery";
-import { pokeContext } from "../../../../contexts/pokeContext";
-import pokeball from "../../../../assets/img/pokeball.png";
+import pokeApi from "../../services/pokeApi";
+import { Row, PokeProfile, Name, TypeMarker } from "../common";
+import Stats from "../stats";
+import { modalContext } from "../../contexts/modalContext";
+import icons from "../../constants/icons";
+import { loadingContext } from "../../contexts/loadingContext";
+import Loading from "../loading";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { pokeContext } from "../../contexts/pokeContext";
+import pokeball from "../../assets/img/pokeball.png";
+import { Card } from "./components";
 
 const PokeCard = ({ data }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
@@ -33,8 +28,7 @@ const PokeCard = ({ data }) => {
     const captured = pokemons.captured.find(
       (x) => x.pokemonName.toLowerCase() === name.toLowerCase()
     );
-    console.log(name, captured);
-    if (captured !== undefined && captured !== null) {
+    if (captured?.pokemonName === name) {
       setPokeData((prev) => ({
         ...prev,
         captured: {

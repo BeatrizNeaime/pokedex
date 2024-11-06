@@ -6,6 +6,8 @@ import Navbar from './scenes/navbar';
 import Account from './scenes/account';
 import Toast from './components/toast';
 import PokeRoutes from "./router/router";
+import EditAccount from "./scenes/account/editAccount";
+import DeleteAccount from "./scenes/account/deleteAccount";
 
 function App() {
   return (
@@ -15,8 +17,9 @@ function App() {
         <PokeModal />
         <Navbar />
         <PokeRoutes />
-        
         <Account />
+        <EditAccount />
+        <DeleteAccount />
         <Toast />
       </Layout>
     </Router>

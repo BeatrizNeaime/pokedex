@@ -12,7 +12,24 @@ export const AccountContextProvider = ({ children }) => {
       username: null,
       token: null,
     },
+    editAccount: false,
+    deleteAccount: false,
   });
+
+  const logout = () => {
+    sessionStorage.clear();
+    setAccountData({
+      user: {
+        id: 0,
+        name: null,
+        username: null,
+      },
+      editAccount: false,
+      deleteAccount: false,
+      isLogged: false,
+    });
+    return true;
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -30,7 +47,7 @@ export const AccountContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <accountContext.Provider value={{ accountData, setAccountData }}>
+    <accountContext.Provider value={{ accountData, setAccountData, logout }}>
       {children}
     </accountContext.Provider>
   );

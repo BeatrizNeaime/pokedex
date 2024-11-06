@@ -12,7 +12,7 @@ import {
   CloseButton,
   Button,
 } from "../common";
-import Stats from "./../../scenes/pokemons/components/card/components/Stats";
+import Stats from "../stats";
 import GraphData from "../graphData";
 import { useContext, useEffect, useState } from "react";
 import { modalContext } from "../../contexts/modalContext";
