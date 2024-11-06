@@ -3,9 +3,21 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { Column, PageTitle, Row } from "../../components/common";
 import PersonalInfo from "./components/personalInfo";
 import colors from "../../constants/colors";
+import { accountContext } from "../../contexts/accountContext";
+import { useContext } from "react";
+import { pokeContext } from "../../contexts/pokeContext";
 
 const AccountPage = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
+  const { accountData } = useContext(accountContext);
+  const { pokemons } = useContext(pokeContext);
+
+  const capturedPokemons = () => {
+    const captured = pokemons.captured.find(
+      (x) => x.user.userId === accountData.user.id
+    );
+    return captured;
+  };
 
   return (
     <PageContainer
@@ -39,9 +51,15 @@ const AccountPage = () => {
               flexWrap: "wrap",
             }}
           >
-            <PersonalInfo title={"Name"} value={"Ash Ketchum"} />
-            <PersonalInfo title={"Username"} value={"Ash123"} />
-            <PersonalInfo title={"Pokémons Captured"} value={"3"} />
+            <PersonalInfo title={"Name"} value={accountData.user.name} />
+            <PersonalInfo
+              title={"Username"}
+              value={accountData.user.username}
+            />
+            <PersonalInfo
+              title={"Pokémons Captured"}
+              value={capturedPokemons().length}
+            />
           </Row>
         </Column>
         <Column width={"100%"} gap={"16px"}>

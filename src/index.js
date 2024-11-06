@@ -9,18 +9,18 @@ import { ToastContextProvider } from './contexts/toastContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <PokeContextProvider>
-    <ModalContextProvider>
-      <FilterContextProvider>
-        <LoadingContextProvider>
-          <AccountContextProvider>
-            <ToastContextProvider>
+  <ToastContextProvider>
+    <PokeContextProvider>
+      <ModalContextProvider>
+        <FilterContextProvider>
+          <LoadingContextProvider>
+            <AccountContextProvider>
               <App />
-            </ToastContextProvider>
-          </AccountContextProvider>
-        </LoadingContextProvider>
-      </FilterContextProvider>
-    </ModalContextProvider>
-  </PokeContextProvider>
+            </AccountContextProvider>
+          </LoadingContextProvider>
+        </FilterContextProvider>
+      </ModalContextProvider>
+    </PokeContextProvider>
+  </ToastContextProvider>
 );
 

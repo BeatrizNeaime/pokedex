@@ -24,7 +24,7 @@ const getOptions = {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token")
+      "Authorization": "Bearer " + sessionStorage.getItem("token")
     }
   },
   get: {
@@ -82,6 +82,24 @@ const serverApi = {
       const b = await a.json()
       console.log(b)
       return b;
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  },
+  capturePokemon: async (pokemonName) => {
+    try {
+      debugger;
+      postOptions.auth.body = JSON.stringify({ pokemonName: pokemonName, userId: sessionStorage.getItem("id") })
+      const a = await fetch(`${url}pokemon/capture`, postOptions.auth)
+      const b = await a.json()
+
+      if (a.status === 200) {
+        return { message: b.message, status: true }
+      } else if (a.status === 401) {
+        return { message: "Unauthorized", status: false }
+      }
+
     } catch (error) {
       console.error(error)
       return false

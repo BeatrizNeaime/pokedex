@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const { data, setData } = useContext(accountContext);
+  const { accountData, setAccountData } = useContext(accountContext);
   const [logoSize, setLogoSize] = useState("100px");
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Navbar = () => {
         />
       </Link>
 
-      {data.isLogged ? (
+      {accountData.isLogged ? (
         <Link to="/account" style={{ position: "absolute", right: "5%" }}>
           <Button
             style={{
@@ -62,7 +62,9 @@ const Navbar = () => {
             position: "absolute",
             right: "5%",
           }}
-          onClick={() => setData((prev) => ({ ...prev, modalOpen: true }))}
+          onClick={() =>
+            setAccountData((prev) => ({ ...prev, modalOpen: true }))
+          }
         >
           Login
         </Button>

@@ -4,7 +4,7 @@ import {
   CloseButton,
   Column,
   Overlay,
-  StatsTitle
+  StatsTitle,
 } from "../../components/common";
 import { accountContext } from "../../contexts/accountContext";
 import { AccountModalStyle } from "./components";
@@ -15,7 +15,7 @@ import Loading from "../../components/loading";
 import { toastContext } from "../../contexts/toastContext";
 
 const Account = () => {
-  const { data, setData } = useContext(accountContext);
+  const { accountData, setAccountData } = useContext(accountContext);
   const { loading, setLoading } = useContext(loadingContext);
   const { setToast } = useContext(toastContext);
   const [form, setForm] = useState("sign-in");
@@ -30,14 +30,14 @@ const Account = () => {
   });
 
   const closeModal = () => {
-    setData((prev) => ({
+    setAccountData((prev) => ({
       ...prev,
       modalOpen: false,
     }));
   };
 
   const setContextData = (res) => {
-    setData((prev) => ({
+    setAccountData((prev) => ({
       ...prev,
       modalOpen: false,
       isLogged: true,
@@ -103,7 +103,7 @@ const Account = () => {
     }
   };
 
-  if (!data.modalOpen) {
+  if (!accountData.modalOpen) {
     return null;
   }
 

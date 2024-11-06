@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const accountContext = createContext();
 
 export const AccountContextProvider = ({ children }) => {
-  const [data, setData] = useState({
+  const [accountData, setAccountData] = useState({
     modalOpen: false,
     isLogged: false,
     user: {
@@ -17,7 +17,7 @@ export const AccountContextProvider = ({ children }) => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
-      setData((prev) => ({
+      setAccountData((prev) => ({
         ...prev,
         isLogged: true,
         user: {
@@ -30,7 +30,7 @@ export const AccountContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <accountContext.Provider value={{ data, setData }}>
+    <accountContext.Provider value={{ accountData, setAccountData }}>
       {children}
     </accountContext.Provider>
   );
