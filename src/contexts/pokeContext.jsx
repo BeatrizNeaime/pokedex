@@ -80,14 +80,6 @@ export const PokeContextProvider = ({ children }) => {
           userId: userId,
           pokemonName: pokemonName,
         });
-        setToast({
-          open: true,
-          title: "Pokémon captured!",
-          message: `${pokemonName
-            .replaceAll("-", " ")
-            .toCapitalize()} was captured by ${userId}`,
-          type: "info",
-        });
       } catch (error) {
         setToast({
           open: true,
