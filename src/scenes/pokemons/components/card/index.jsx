@@ -29,16 +29,17 @@ const PokeCard = ({ data }) => {
     image: [],
   });
 
-  const verifyCapture = () => {
+  const verifyCapture = async (name) => {
     const captured = pokemons.captured.find(
-      (x) => x.pokemonName.toLowerCase() === pokeData.name.toLowerCase()
+      (x) => x.pokemonName.toLowerCase() === name.toLowerCase()
     );
-    if (captured) {
+    console.log(name, captured);
+    if (captured !== undefined && captured !== null) {
       setPokeData((prev) => ({
         ...prev,
         captured: {
           status: true,
-          capturedBy: captured.user.username,
+          username: captured.user.username,
           capturedAt: captured.capturedAt,
         },
       }));
@@ -51,12 +52,12 @@ const PokeCard = ({ data }) => {
       const response = await pokeApi.getPokemon(data.url);
       if (response) {
         setPokeData((prev) => ({ ...prev, ...response }));
-        verifyCapture();
         const pokeType = response?.types?.find((x) => x.slot === 1);
         setAux((prev) => ({
           ...prev,
           color: colors.types[pokeType?.type?.name],
         }));
+        verifyCapture(response.name);
       } else {
         return;
       }
@@ -74,6 +75,7 @@ const PokeCard = ({ data }) => {
 
   useEffect(() => {
     getPokemon();
+    console.log(pokeData);
   }, [data.url]);
 
   if (loading) {
@@ -85,7 +87,7 @@ const PokeCard = ({ data }) => {
       bg={createGradient(aux.color, colors.blue[900])}
       onClick={handleClick}
     >
-      {pokeData?.captured?.status && (
+      {pokeData?.captured && (
         <img
           src={pokeball}
           style={{

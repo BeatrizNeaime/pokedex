@@ -7,16 +7,20 @@ const CapturedInfo = ({ name, date }) => {
     <Row
       width={"max-content"}
       align={"flex-start"}
+      gap={"8px"}
       style={{
         backgroundColor: colors.blue[900],
         padding: "8px",
         borderRadius: "8px",
-        marginBottom: "16px",
         alignSelf: "flex-start",
       }}
     >
       <img src={pokeball} height={"18px"} />
-      <p style={{ marginLeft: "8px" }}>
+      <p
+        style={{
+          fontSize: "12px",
+        }}
+      >
         Captured by <b>{name}</b> on {new Date(date).toLocaleDateString()}
       </p>
     </Row>
