@@ -3,9 +3,12 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { Column, PageTitle, Row } from "../../components/common";
 import PersonalInfo from "./components/personalInfo";
 import colors from "../../constants/colors";
+import { useContext } from "react";
+import { accountContext } from "./../../contexts/accountContext";
 
 const AccountPage = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
+  const { accountData } = useContext(accountContext);
 
   return (
     <PageContainer
@@ -39,7 +42,7 @@ const AccountPage = () => {
               flexWrap: "wrap",
             }}
           >
-            <PersonalInfo title={"Name"} value={"Ash Ketchum"} />
+            <PersonalInfo title={"Name"} value={accountData.user.name} />
             <PersonalInfo title={"Username"} value={"Ash123"} />
             <PersonalInfo title={"Pokémons Captured"} value={"3"} />
           </Row>
