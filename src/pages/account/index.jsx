@@ -169,6 +169,7 @@ const AccountPage = () => {
                     name: pokemon.pokemonName,
                     url: pokemon.pokemonUrl,
                   }}
+                  canRelease={true}
                 />
               ))
             ) : (

@@ -1,7 +1,7 @@
 import colors, { createGradient } from "../../constants/colors";
 import { useContext, useEffect, useState } from "react";
 import pokeApi from "../../services/pokeApi";
-import { Row, PokeProfile, Name, TypeMarker } from "../common";
+import { Row, PokeProfile, Name, TypeMarker, Button } from "../common";
 import Stats from "../stats";
 import { modalContext } from "../../contexts/modalContext";
 import icons from "../../constants/icons";
@@ -11,12 +11,15 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { pokeContext } from "../../contexts/pokeContext";
 import { Card } from "./components";
 import pokeball from "../../assets/img/pokeball.png";
+import { HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+import { accountContext } from "../../contexts/accountContext";
 
-const PokeCard = ({ data }) => {
+const PokeCard = ({ data, canRelease }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { setModal, setData } = useContext(modalContext);
   const { loading, setLoading } = useContext(loadingContext);
   const { pokemons } = useContext(pokeContext);
+  const { accountData } = useContext(accountContext);
   const [pokeData, setPokeData] = useState();
 
   const [aux, setAux] = useState({
@@ -62,9 +65,27 @@ const PokeCard = ({ data }) => {
     setModal(true);
   };
 
+  const releasePokemon = async (e) => {
+    e.stopPropagation();
+    setLoading(true);
+
+    const conn = new HubConnectionBuilder()
+      .withUrl("http://localhost:5284/pokemonHub")
+      .configureLogging(LogLevel.Information)
+      .withAutomaticReconnect()
+      .build();
+
+    await conn.start();
+    await conn.invoke("ReleasePokemon", {
+      userId: parseInt(accountData.user.id),
+      pokemonName: data.name,
+    });
+    setLoading(false);
+  };
+
   useEffect(() => {
     getPokemon();
-  }, [data.url]);
+  }, [data.url, pokemons.captured]);
 
   if (loading) {
     return <Loading />;
@@ -130,6 +151,22 @@ const PokeCard = ({ data }) => {
           unit={"Kg"}
         />
       </Row>
+
+      {canRelease && (
+        <Button
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            right: "10px",
+            height: "30px",
+            backgroundColor: colors.types.fighting,
+            marginTop: "16px",
+          }}
+          onClick={releasePokemon}
+        >
+          <i class="fa-solid fa-ban"></i> {desktop ? "Release" : ""}
+        </Button>
+      )}
     </Card>
   );
 };
