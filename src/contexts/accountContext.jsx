@@ -11,6 +11,7 @@ export const AccountContextProvider = ({ children }) => {
       name: null,
       username: null,
       token: null,
+      captured: [],
     },
     editAccount: false,
     deleteAccount: false,

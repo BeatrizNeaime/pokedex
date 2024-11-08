@@ -1,12 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import pokeApi from "../services/pokeApi";
 import serverApi from "../services/serverApi";
-import { toastContext } from "./toastContext";
 
 export const pokeContext = createContext();
 
 export const PokeContextProvider = ({ children }) => {
-  const { setToast } = useContext(toastContext);
   const [pokemons, setPokemons] = useState({
     count: 0,
     next: 10,

@@ -40,9 +40,9 @@ const PokeModal = () => {
     const width = window.innerWidth;
 
     if ((320 <= width && width < 375) || (375 <= width && width < 425)) {
-      setProfileTop("-50%");
+      setProfileTop("-40%");
     } else if (425 <= width && width < 768) {
-      setProfileTop("-30%");
+      setProfileTop("-35%");
     } else if (768 <= width && width < 1024) {
       setProfileTop("-50%");
     } else if (width >= 1024) {
@@ -74,7 +74,7 @@ const PokeModal = () => {
 
   const capturePokemon = async (userId, pokemonName, speciesUrl) => {
     const conn = new HubConnectionBuilder()
-      .withUrl("http://localhost:5284/pokemonHub")
+      .withUrl("https://www.pokedexneaime.store/pokemonHub")
       .configureLogging(LogLevel.Information)
       .withAutomaticReconnect()
       .build();
@@ -266,7 +266,11 @@ const PokeModal = () => {
                 <AudioPlayer audio={modalData?.cries?.latest} width={"100%"} />
               </Column>
               <Column width={"100%"} align={"flex-start"}>
-                <StatsTitle>
+                <StatsTitle
+                  style={{
+                    fontSize: desktop ? "" : "16px",
+                  }}
+                >
                   <i class="fa-solid fa-circle-radiation"></i> Weaknesses
                 </StatsTitle>
                 <Row width={"max-content"}>

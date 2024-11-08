@@ -13,15 +13,16 @@ import { filterContext } from "../../contexts/filterContext";
 import { habitats } from "../../constants/habitats";
 import HabitatsDropdown from "./components/dropdown/habitats";
 import SelectedFilter from "./components/selectedFilter";
-import pokeApi from "../../services/pokeApi";
 import { pokeContext } from "../../contexts/pokeContext";
 import { loadingContext } from "./../../contexts/loadingContext";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import pokeApi from "../../services/pokeApi";
 
 const Filters = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { filters, setFilters } = useContext(filterContext);
-  const { pokemons, setPokemons, getData } = useContext(pokeContext);
+  const { pokemons, setPokemons, getData, refreshPokemons } =
+    useContext(pokeContext);
   const { setLoading } = useContext(loadingContext);
 
   const handleClick = async () => {
@@ -61,14 +62,13 @@ const Filters = () => {
     }
   };
 
-  const handleClearFilters = () => {
-    getData();
+  const handleClearFilters = async () => {
     setFilters({
       type: null,
       habitat: null,
       name: null,
     });
-    return;
+    await getData();
   };
 
   useEffect(() => {

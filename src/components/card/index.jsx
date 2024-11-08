@@ -70,7 +70,7 @@ const PokeCard = ({ data, canRelease }) => {
     setLoading(true);
 
     const conn = new HubConnectionBuilder()
-      .withUrl("http://localhost:5284/pokemonHub")
+      .withUrl("https://www.pokedexneaime.store/pokemonHub")
       .configureLogging(LogLevel.Information)
       .withAutomaticReconnect()
       .build();
@@ -81,6 +81,7 @@ const PokeCard = ({ data, canRelease }) => {
       pokemonName: data.name,
     });
     setLoading(false);
+    window.location.reload();
   };
 
   useEffect(() => {
