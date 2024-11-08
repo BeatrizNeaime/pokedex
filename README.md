@@ -9,6 +9,7 @@ Você pode acessá-la [neste link](https://pokedex-seven-inky.vercel.app)
 
 - **React**: Biblioteca JavaScript para construir interfaces de usuário.
 - **Styled Components**: Para estilização dos componentes.
+- **Signal R**: Para atualizações em tempo real.
 - **Context API**: Para gerenciamento de estado global da aplicação.
 - **PokéAPI**: Para obter dados sobre Pokémon.
 
@@ -18,6 +19,10 @@ Você pode acessá-la [neste link](https://pokedex-seven-inky.vercel.app)
 - **Filtros**: Os usuários podem filtrar Pokémon por tipo e habitat.
 - **Paginação**: A aplicação suporta paginação para facilitar a navegação entre grandes conjuntos de dados.
 - **Modal de Detalhes**: Exibe detalhes adicionais sobre um Pokémon selecionado.
+- **Modal de login e cadastro**: Permite o acesso dos usuários
+- **Modal para atualizar conta**: permite atualizar nome, nome de usuário e senha.
+- **Modal para confirmar a exclusão da conta**: garante que a conta não foi excluída 'sem querer'.
+- **Página com dados da conta**: exibe os dados do usuário (nome, nume de usuário e Pokémons capturados)
 
 ## Como Executar o Projeto
 
