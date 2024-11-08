@@ -1,5 +1,5 @@
 
-const url = "http://localhost:5284/"
+const url = "http://www.pokedexneaime.store/"
 
 const patchOptions = {
   auth: {
