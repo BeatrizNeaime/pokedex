@@ -66,7 +66,7 @@ const PokeName = styled.h1`
 const PokeBall = styled.img`
   position: absolute;
   bottom: 0;
-  z-index: 9999999999;
+  z-index: 10000;
   width: 200px;
   transform: translateX(-50%);
   -webkit-user-drag: none;

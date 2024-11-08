@@ -1,24 +1,22 @@
-import colors, { createGradient } from "../../../../constants/colors";
-import { Card } from "./components";
+import colors, { createGradient } from "../../constants/colors";
 import { useContext, useEffect, useState } from "react";
-import api from "./../../../../services/api";
-import {
-  Row,
-  PokeProfile,
-  Name,
-  TypeMarker,
-} from "../../../../components/common";
-import Stats from "./components/Stats";
-import { modalContext } from "../../../../contexts/modalContext";
-import icons from "../../../../constants/icons";
-import { loadingContext } from "../../../../contexts/loadingContext";
-import Loading from "../../../../components/loading";
-import { useMediaQuery } from "../../../../hooks/useMediaQuery";
+import pokeApi from "../../services/pokeApi";
+import { Row, PokeProfile, Name, TypeMarker } from "../common";
+import Stats from "../stats";
+import { modalContext } from "../../contexts/modalContext";
+import icons from "../../constants/icons";
+import { loadingContext } from "../../contexts/loadingContext";
+import Loading from "../loading";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { pokeContext } from "../../contexts/pokeContext";
+import pokeball from "../../assets/img/pokeball.png";
+import { Card } from "./components";
 
 const PokeCard = ({ data }) => {
   const desktop = useMediaQuery("(min-width: 1024px)");
   const { setModal, setData } = useContext(modalContext);
   const { loading, setLoading } = useContext(loadingContext);
+  const { pokemons } = useContext(pokeContext);
   const [pokeData, setPokeData] = useState();
 
   const [aux, setAux] = useState({
@@ -26,17 +24,34 @@ const PokeCard = ({ data }) => {
     image: [],
   });
 
+  const verifyCapture = async (name) => {
+    const captured = pokemons.captured.find(
+      (x) => x.pokemonName.toLowerCase() === name.toLowerCase()
+    );
+    if (captured?.pokemonName === name) {
+      setPokeData((prev) => ({
+        ...prev,
+        captured: {
+          status: true,
+          username: captured.user.username,
+          capturedAt: captured.capturedAt,
+        },
+      }));
+    }
+  };
+
   const getPokemon = async () => {
     setLoading(true);
     try {
-      const response = await api.getPokemon(data.url);
+      const response = await pokeApi.getPokemon(data.url);
       if (response) {
-        setPokeData(response);
+        setPokeData((prev) => ({ ...prev, ...response }));
         const pokeType = response?.types?.find((x) => x.slot === 1);
         setAux((prev) => ({
           ...prev,
           color: colors.types[pokeType?.type?.name],
         }));
+        verifyCapture(response.name);
       } else {
         return;
       }
@@ -54,6 +69,7 @@ const PokeCard = ({ data }) => {
 
   useEffect(() => {
     getPokemon();
+    console.log(pokeData);
   }, [data.url]);
 
   if (loading) {
@@ -65,6 +81,19 @@ const PokeCard = ({ data }) => {
       bg={createGradient(aux.color, colors.blue[900])}
       onClick={handleClick}
     >
+      {pokeData?.captured && (
+        <img
+          src={pokeball}
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            width: "20px",
+            height: "20px",
+          }}
+        />
+      )}
+
       <PokeProfile
         src={pokeData?.sprites?.other?.["official-artwork"]?.front_default}
         style={{

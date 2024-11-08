@@ -1,6 +1,6 @@
 import pokeball from "../../assets/img/pokeball.png";
 import styled from "styled-components";
-import { Card } from "../../scenes/pokemons/components/card/components";
+import { Card } from "../card/components";
 
 const LoadingImage = styled.img`
   animation: rotate 5s infinite linear;
@@ -16,7 +16,11 @@ const LoadingImage = styled.img`
 
 const Loading = () => {
   return (
-    <Card>
+    <Card
+      style={{
+        border: "none",
+      }}
+    >
       <LoadingImage src={pokeball} alt="loading" />
     </Card>
   );

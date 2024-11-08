@@ -9,8 +9,10 @@ import {
   TypeMarker,
   PokeCode,
   Overlay,
+  CloseButton,
+  Button,
 } from "../common";
-import Stats from "./../../scenes/pokemons/components/card/components/Stats";
+import Stats from "../stats";
 import GraphData from "../graphData";
 import { useContext, useEffect, useState } from "react";
 import { modalContext } from "../../contexts/modalContext";
@@ -18,13 +20,22 @@ import icons from "../../constants/icons";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import AudioPlayer from "./../audioPlayer/index";
 import types from "./../../constants/types";
+import CapturedInfo from "./components/capturedInfo";
+import { accountContext } from "./../../contexts/accountContext";
+import Loading from "../loading";
+import { pokeContext } from "../../contexts/pokeContext";
+import { toastContext } from "./../../contexts/toastContext";
 
 const PokeModal = () => {
   const desktop = useMediaQuery("(min-width: 1024px)");
-  const { modal, data, setModal } = useContext(modalContext);
+  const { modal, data: modalData, setModal } = useContext(modalContext);
+  const { accountData, setAccountData } = useContext(accountContext);
+  const { capturePokemon } = useContext(pokeContext);
+  const { setToast } = useContext(toastContext);
   const [color, setColor] = useState();
   const [weaknesses, setWeaknesses] = useState([]);
   const [profileTop, setProfileTop] = useState();
+  const [loading, setLoading] = useState(false);
 
   const getProfileTop = () => {
     const width = window.innerWidth;
@@ -51,24 +62,63 @@ const PokeModal = () => {
   };
 
   const getColor = () => {
-    const pokeType = data?.types[0];
+    const pokeType = modalData?.types[0];
     setColor(colors.types[pokeType?.type?.name]);
   };
 
   const getWeaknesses = () => {
-    data?.types.map((item) => {
+    modalData?.types.map((item) => {
       const type = types[item.type.name];
       setWeaknesses([...type.weakness]);
     });
+  };
+
+  const tryCapturePokemon = async () => {
+    if (accountData.isLogged) {
+      setLoading(true);
+      try {
+        await capturePokemon(accountData.user.id, modalData.name);
+      } catch (error) {
+        console.error(error);
+        setToast({
+          open: true,
+          title: "Ops!",
+          message: "Something went wrong! Try again later.",
+          type: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setAccountData((prev) => ({
+        ...prev,
+        modalOpen: true,
+      }));
+    }
   };
 
   useEffect(() => {
     getColor();
     getWeaknesses();
     getProfileTop();
-  }, [data]);
+  }, [modalData]);
 
   if (!modal) return null;
+
+  if (loading) {
+    return (
+      <Overlay>
+        <ModalContainer
+          bg={createGradient(color, colors.blue[900])}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <Loading />
+        </ModalContainer>
+      </Overlay>
+    );
+  }
 
   return (
     <Overlay
@@ -82,40 +132,33 @@ const PokeModal = () => {
           e.stopPropagation();
         }}
       >
-        <i
-          class="fa-solid fa-circle-xmark"
-          style={{
-            position: "absolute",
-            top: "8px",
-            right: "8px",
-            color: colors.gray[400],
-            cursor: "pointer",
-          }}
+        <CloseButton
+          className="fa-solid fa-circle-xmark"
           onClick={() => {
             setModal(false);
           }}
-        ></i>
+        ></CloseButton>
 
         <PokeProfile
-          src={data?.sprites?.other?.["official-artwork"]?.front_default}
+          src={modalData?.sprites?.other?.["official-artwork"]?.front_default}
           style={{
             top: profileTop,
           }}
         />
-        <Name marginTop={desktop ? "35%" : "25%"}>
-          ● {data.name.replaceAll("-", " ")} ●
+        <Name marginTop={desktop ? "30%" : "25%"}>
+          ● {modalData.name.replaceAll("-", " ")} ●
         </Name>
-        <PokeCode>#{formatOrder(data?.order)}</PokeCode>
+        <PokeCode>#{formatOrder(modalData?.order)}</PokeCode>
 
         <PhysioData>
           <Stats
             icon={"ruler"}
             name={"Altura"}
-            value={data?.height}
+            value={modalData?.height}
             unit={"m"}
           />
           <Row>
-            {data?.types.map((item) => {
+            {modalData?.types.map((item) => {
               return (
                 <TypeMarker
                   key={item.type.slot}
@@ -130,7 +173,7 @@ const PokeModal = () => {
           <Stats
             icon={"weight"}
             name={"Peso"}
-            value={data?.weight}
+            value={modalData?.weight}
             unit={"Kg"}
           />
         </PhysioData>
@@ -143,32 +186,32 @@ const PokeModal = () => {
               </StatsTitle>
               <GraphData
                 icon={"heart-pulse"}
-                value={data?.stats[0].base_stat}
+                value={modalData?.stats[0].base_stat}
                 maxValue={"100"}
               />
               <GraphData
                 icon={"hand-fist"}
-                value={data?.stats[1].base_stat}
+                value={modalData?.stats[1].base_stat}
                 maxValue={"100"}
               />
               <GraphData
                 icon={"shield-halved"}
-                value={data?.stats[2].base_stat}
+                value={modalData?.stats[2].base_stat}
                 maxValue={"100"}
               />
               <GraphData
                 icon={"khanda"}
-                value={data?.stats[3].base_stat}
+                value={modalData?.stats[3].base_stat}
                 maxValue={"100"}
               />
               <GraphData
                 icon={"shield-heart"}
-                value={data?.stats[4].base_stat}
+                value={modalData?.stats[4].base_stat}
                 maxValue={"100"}
               />
               <GraphData
                 icon={"gauge-high"}
-                value={data?.stats[5].base_stat}
+                value={modalData?.stats[5].base_stat}
                 maxValue={"100"}
               />
             </Column>
@@ -186,7 +229,7 @@ const PokeModal = () => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {data?.abilities.map((item) => {
+                  {modalData?.abilities.map((item) => {
                     return (
                       <Row gap={"4px"} width={"max-content"}>
                         <i
@@ -206,18 +249,13 @@ const PokeModal = () => {
                 <StatsTitle>
                   <i class="fa-solid fa-volume-high"></i> Sound
                 </StatsTitle>
-                <AudioPlayer audio={data?.cries?.latest} width={"100%"} />
+                <AudioPlayer audio={modalData?.cries?.latest} width={"100%"} />
               </Column>
               <Column width={"100%"} align={"flex-start"}>
                 <StatsTitle>
                   <i class="fa-solid fa-circle-radiation"></i> Weaknesses
                 </StatsTitle>
-                <Row
-                  width={"max-content"}
-                  style={{
-                    marginBottom: "16px",
-                  }}
-                >
+                <Row width={"max-content"}>
                   {weaknesses.map((item) => {
                     return (
                       <TypeMarker
@@ -235,6 +273,22 @@ const PokeModal = () => {
               </Column>
             </Column>
           </Row>
+
+          {modalData?.captured?.status && (
+            <CapturedInfo
+              name={modalData?.captured?.username}
+              date={modalData?.captured?.capturedAt}
+            />
+          )}
+
+          {!modalData?.captured?.status && (
+            <Button
+              style={{ width: "100%", marginBottom: "8px" }}
+              onClick={tryCapturePokemon}
+            >
+              Capture this Pokémon
+            </Button>
+          )}
         </Column>
       </ModalContainer>
     </Overlay>

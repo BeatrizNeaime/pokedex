@@ -11,14 +11,13 @@ const ModalContainer = styled.div`
   border-radius: 6px;
   box-shadow: 0 8px 32px 0 rgba(8, 8, 8, 0.37);
   position: relative;
-  padding: 0px 8px;
+  padding: 16px 8px;
   margin: 0;
 
   @media screen and (max-width: 768px) {
     width: 90%;
     max-height: 95%;
   }
-
 `;
 
 const PhysioData = styled.div`

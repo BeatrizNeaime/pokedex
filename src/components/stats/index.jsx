@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Column } from "../../../../../components/common";
+import { Column } from "../common";
 
 const StatsName = styled.div`
   font-size: 20px;
