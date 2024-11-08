@@ -89,7 +89,6 @@ const pokeApi = {
         res.all = aux;
       }
       if (filters.type) {
-        console.log("tipo")
         const a = await pokeApi.filterPokemonByType(filters.type, data);
         if (res.all.length === 0 && (!filters.habitat && !filters.name)) {
           a.map((pokemon) => res.all.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url }));
