@@ -1,5 +1,5 @@
 
-const url = "http://www.pokedexneaime.store/"
+const url = "https://www.pokedexneaime.store/"
 
 const patchOptions = {
   auth: {

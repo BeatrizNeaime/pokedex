@@ -5,7 +5,11 @@ import { useMediaQuery } from "../../hooks/useMediaQuery";
 const Player = styled(Button)`
   border-radius: 50%;
   padding: 8px;
-  width: 45px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const AudioPlayer = ({ audio, width }) => {

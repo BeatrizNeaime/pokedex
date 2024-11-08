@@ -19,7 +19,7 @@ function App() {
 
   const initConnection = async () => {
     const conn = new HubConnectionBuilder()
-      .withUrl("http://www.pokedexneaime.store/pokemonHub")
+      .withUrl("https://www.pokedexneaime.store/pokemonHub")
       .configureLogging(LogLevel.Information)
       .withAutomaticReconnect()
       .build();
