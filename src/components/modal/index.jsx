@@ -268,7 +268,7 @@ const PokeModal = () => {
               <Column width={"100%"} align={"flex-start"}>
                 <StatsTitle
                   style={{
-                    fontSize: desktop ? "" : "16px",
+                    fontSize: "16px",
                   }}
                 >
                   <i class="fa-solid fa-circle-radiation"></i> Weaknesses
@@ -303,6 +303,7 @@ const PokeModal = () => {
             <Button
               style={{ width: "100%", marginBottom: "8px" }}
               onClick={tryCapturePokemon}
+              disabled={loading}
             >
               Capture this Pokémon
             </Button>

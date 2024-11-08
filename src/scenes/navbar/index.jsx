@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const { accountData, setAccountData } = useContext(accountContext);
-  const [logoSize, setLogoSize] = useState("100px");
+  const [logoSize, setLogoSize] = useState(desktop ? "80px" : "60px");
 
   useEffect(() => {
     const handleScroll = () => {

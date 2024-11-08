@@ -68,7 +68,7 @@ const pokeApi = {
     try {
       if (filters.name) {
         const targetData = res.results.length === 0 ? data : res.results;
-        res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name));
+        res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name.toLowerCase()));
       }
 
       if (filters.habitat) {
