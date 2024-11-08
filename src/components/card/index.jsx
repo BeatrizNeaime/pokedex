@@ -157,15 +157,16 @@ const PokeCard = ({ data, canRelease }) => {
         <Button
           style={{
             position: "absolute",
-            bottom: "10px",
+            top: "0px",
             right: "10px",
             height: "30px",
             backgroundColor: colors.types.fighting,
             marginTop: "16px",
+            padding: desktop ? "" : "5px",
           }}
           onClick={releasePokemon}
         >
-          <i class="fa-solid fa-ban"></i> {desktop ? "Release" : ""}
+          <i class="fa-solid fa-ban"></i>
         </Button>
       )}
     </Card>

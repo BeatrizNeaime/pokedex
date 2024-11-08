@@ -69,6 +69,7 @@ const serverApi = {
         return { message: b.message, status: false }
       }
       if (b.token) {
+        sessionStorage.clear()
         sessionStorage.setItem("token", b.token)
         sessionStorage.setItem("user", b.username)
         sessionStorage.setItem("id", b.id)
@@ -90,6 +91,7 @@ const serverApi = {
       if (a.status !== 200) {
         return { message: b.message, status: false }
       }
+      sessionStorage.clear()
       sessionStorage.setItem("token", b.token)
       sessionStorage.setItem("user", b.username)
       sessionStorage.setItem("id", b.id)

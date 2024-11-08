@@ -2,7 +2,7 @@ import styled from "styled-components";
 import colors from "../../constants/colors";
 
 const Logo = styled.img`
-  height: 80px;
+  height: 70px;
 
   @media screen and (max-width: 768px) {
     height: 60px;
