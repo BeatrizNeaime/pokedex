@@ -73,7 +73,7 @@ const api = {
       if (filters.habitat) {
         const aux = []
         const a = await api.filterPokemonByHabitat(filters.habitat);
-        if (res.all.length == 0) {
+        if (res.all.length === 0) {
           console.clear()
           a.map((pokemon) => aux.push({ name: pokemon.name, url: pokemon.url.replace("-species", "") }));
         } else {
@@ -81,7 +81,7 @@ const api = {
           const aux = []
           a.filter(pokemon => {
             if (dataNames.has(pokemon.name)) {
-              aux.push({ name: pokemon.name, url: pokemon.url })
+              return aux.push({ name: pokemon.name, url: pokemon.url })
             }
           });
         }
