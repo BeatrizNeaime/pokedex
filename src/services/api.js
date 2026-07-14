@@ -53,7 +53,7 @@ const api = {
     }
 
     const dataNames = new Set(data.map(pokemon => pokemon.name));
-    return pokemonsByType.filter(pokemon => dataNames.has(pokemon.pokemon.name));
+    return pokemonsByType.filter(pokemon => (dataNames.has(pokemon.pokemon.name)));
   },
   getFilteredPokemons: async (filters, offset = 0, data = []) => {
     const res = {
@@ -67,7 +67,7 @@ const api = {
     try {
       if (filters.name) {
         const targetData = res.results.length === 0 ? data : res.results;
-        res.all = targetData.filter(pokemon => pokemon.name.includes(filters.name));
+        res.all = targetData.filter(pokemon =>( pokemon.name.includes(filters.name)));
       }
 
       if (filters.habitat) {
@@ -79,9 +79,12 @@ const api = {
         } else {
           const dataNames = new Set(res.all.map(pokemon => pokemon.name));
           const aux = []
-          a.filter(pokemon => {
+          a.forEach((pokemon) => {
             if (dataNames.has(pokemon.name)) {
-              return aux.push({ name: pokemon.name, url: pokemon.url })
+              aux.push({
+                name: pokemon.name,
+                url: pokemon.url,
+              });
             }
           });
         }
@@ -95,9 +98,12 @@ const api = {
         } else {
           const dataNames = new Set(res.all.map(pokemon => pokemon.name));
           const aux = []
-          a.filter(pokemon => {
+          a.forEach((pokemon) => {
             if (dataNames.has(pokemon.pokemon.name)) {
-              aux.push({ name: pokemon.pokemon.name, url: pokemon.pokemon.url })
+              aux.push({
+                name: pokemon.pokemon.name,
+                url: pokemon.pokemon.url,
+              });
             }
           });
           res.all = aux;

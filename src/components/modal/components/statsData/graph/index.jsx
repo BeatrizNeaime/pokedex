@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import colors from "../../../../../constants/colors";
 import { useEffect, useState } from "react";
@@ -62,7 +63,7 @@ const Graph = ({ value }) => {
 
   useEffect(() => {
     calculatePercentage();
-  }, []);
+  }, [value]);
 
   return (
     <BarContainer>

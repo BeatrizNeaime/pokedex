@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import colors, { createGradient } from "../../../../constants/colors";
 import { Card } from "./components";
 import { useContext, useEffect, useState } from "react";
@@ -81,7 +82,7 @@ const PokeCard = ({ data }) => {
       >
         {pokeData?.types?.map((type) => (
           <TypeMarker key={type.slot} bg={colors.types[type.type.name]}>
-            <img src={icons[type.type.name]} /> {type.type.name}
+            <img src={icons[type.type.name]} alt={type.type.name} /> {type.type.name}
           </TypeMarker>
         ))}
       </Row>

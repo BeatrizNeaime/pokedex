@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ModalContainer, PhysioData } from "./components";
 import colors, { createGradient } from "./../../constants/colors";
 import {
@@ -56,10 +57,11 @@ const PokeModal = () => {
   };
 
   const getWeaknesses = () => {
-    data?.types.map((item) => {
-      const type = types[item.type.name];
-      setWeaknesses([...type.weakness]);
-    });
+    const weaknesses = data?.types.flatMap(
+      (item) => types[item.type.name]?.weakness || []
+    );
+
+    setWeaknesses([...new Set(weaknesses)]);
   };
 
   useEffect(() => {
@@ -122,7 +124,7 @@ const PokeModal = () => {
                   bg={colors.types[item.type.name]}
                   rounded={true}
                 >
-                  <img src={icons[item.type.name]} />
+                  <img src={icons[item.type.name]} alt={item.type.name} />
                 </TypeMarker>
               );
             })}
@@ -227,7 +229,7 @@ const PokeModal = () => {
                           marginRight: "8px",
                         }}
                       >
-                        <img src={icons[item]} />
+                        <img src={icons[item]} alt={item} />
                       </TypeMarker>
                     );
                   })}
