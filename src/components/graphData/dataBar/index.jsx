@@ -36,34 +36,22 @@ const DataBar = ({ value }) => {
     color: "#bbb",
   });
 
-  const calculatePercentage = () => {
+  useEffect(() => {
     const result = (value / 200) * 100;
+
+    let color = "#ff0000";
+
     if (result > 60) {
-      setData((prev) => ({
-        ...prev,
-        color: "#00ff00",
-      }));
+      color = "#00ff00";
     } else if (result > 30) {
-      setData((prev) => ({
-        ...prev,
-        color: "#fffa50",
-      }));
-    } else {
-      setData((prev) => ({
-        ...prev,
-        color: "#ff0000",
-      }));
+      color = "#fffa50";
     }
 
-    setData((prev) => ({
-      ...prev,
+    setData({
       percentage: result,
-    }));
-  };
-
-  useEffect(() => {
-    calculatePercentage();
-  }, []);
+      color,
+    });
+  }, [value]);
 
   return (
     <BarContainer>
